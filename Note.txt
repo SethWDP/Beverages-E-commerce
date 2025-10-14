@@ -1,0 +1,81 @@
+beverages-ecommerce/
+│
+├── public/
+│   └── favicon.ico
+│
+├── src/
+│   ├── assets/
+│   │   ├── images/
+│   │   └── icons/
+│   │
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── ProductCard.jsx
+│   │   ├── ReviewCard.jsx
+│   │   └── UI/               # Reusable UI components (buttons, inputs, modals, etc.)
+│   │       ├── Button.jsx
+│   │       ├── Input.jsx
+│   │       └── Modal.jsx
+│   │
+│   ├── pages/
+│   │   ├── Home/
+│   │   │   └── Home.jsx
+│   │   ├── About/
+│   │   │   └── About.jsx
+│   │   ├── Contact/
+│   │   │   └── Contact.jsx
+│   │   ├── Favorite/
+│   │   │   └── Favorite.jsx
+│   │   ├── Account/
+│   │   │   ├── SignUp.jsx
+│   │   │   ├── LogIn.jsx
+│   │   │   ├── CreateAccount.jsx
+│   │   │   └── UserProfile.jsx
+│   │   ├── Shop/
+│   │   │   ├── Shop.jsx
+│   │   │   ├── Water.jsx
+│   │   │   ├── EnergyDrink.jsx
+│   │   │   ├── Beer.jsx
+│   │   │   ├── Juice.jsx
+│   │   │   └── SoftDrink.jsx
+│   │   ├── Review/
+│   │   │   └── Review.jsx
+│   │   └── Error404/
+│   │       └── Error404.jsx
+│   │
+│   ├── routes/
+│   │   └── AppRoutes.jsx     # All routes setup here
+│   │
+│   ├── context/
+│   │   ├── AuthContext.jsx   # For user login/signup state
+│   │   └── CartContext.jsx   # For shopping cart management (optional)
+│   │
+│   ├── hooks/
+│   │   └── useAuth.js        # Custom hooks
+│   │
+│   ├── styles/
+│   │   ├── globals.css
+│   │   └── variables.css
+│   │
+│   ├── utils/
+│   │   └── helpers.js        # Helper functions (format price, etc.)
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── package.json
+└── vite.config.js
+
+components/ → shared UI components like Navbar, Footer, and reusable cards.
+
+pages/ → each page grouped in its own folder for scalability.
+
+routes/AppRoutes.jsx → use React Router to manage navigation.
+
+context/ → manage global states like authentication or cart.
+
+utils/ → small helper functions.
+
+assets/ → images, logos, and icons.
