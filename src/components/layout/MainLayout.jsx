@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import Footer from "../Footer";
 import {
   FiSearch,
   FiShoppingCart,
@@ -691,6 +692,9 @@ const MainLayout = () => {
           animation: slide-up 0.3s ease-out;
         }
       `}</style>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };
