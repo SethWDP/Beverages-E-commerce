@@ -4,6 +4,8 @@ import Homepage from "./pages/Home/Homepage";
 import Aboutpage from "./pages/About/Aboutpage";
 import Contactpage from "./pages/Contact/Contactpage";
 import Favoritepage from "./pages/Favorite/Favoritepage";
+import Login from "./pages/Account/LogIn";
+import CreateAcc from "./pages/Account/CreateAccount";
 import Shoppage from "./pages/Shop/Shoppage";
 import Beer from "./pages/Shop/Beer";
 import Water from "./pages/Shop/Waterpage";
@@ -21,6 +23,8 @@ function App() {
           <Route path="/about" element={<Aboutpage />} />
           <Route path="/contact" element={<Contactpage />} />
           <Route path="/favorite" element={<Favoritepage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/Create_Account" element={<CreateAcc />} />
           <Route path="/shop" element={<Shoppage />} />
           <Route path="/shop/beer" element={<Beer />} />
           <Route path="/shop/water" element={<Water />} />

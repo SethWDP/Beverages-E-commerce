@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import Footer from "../Footer";
+import Footer from "../layout/Footer";
 import {
   FiSearch,
   FiShoppingCart,
@@ -105,8 +105,8 @@ const MainLayout = () => {
       items.map((item) =>
         item.id === id
           ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
@@ -418,12 +418,15 @@ const MainLayout = () => {
 
             {/* Right section - Notification icons */}
             <div className="flex items-center space-x-4">
-              <button className="text-gray-700 hover:text-blue-600 transition relative">
-                <FiHeart className="text-2xl" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                  2
-                </span>
-              </button>
+              <Link to="/favorite">
+                <button className="text-gray-700 hover:text-blue-600 transition relative">
+                  <FiHeart className="text-2xl" />
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                    2
+                  </span>
+                </button>
+              </Link>
+
               <button className="text-gray-700 hover:text-blue-600 transition relative">
                 <FiBell className="text-2xl" />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
