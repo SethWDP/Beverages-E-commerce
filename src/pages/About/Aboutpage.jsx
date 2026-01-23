@@ -4,6 +4,7 @@ import a2 from "../../assets/banner/drink2.webp";
 import a3 from "../../assets/banner/drink3.jpg";
 import { Goal, Medal, Leaf, Users } from "lucide-react";
 import Count from "../../components/Count";
+import Marquees from "../../components/UI/Marquees";
 const Aboutpage = () => {
   return (
     <>
@@ -227,9 +228,27 @@ const Aboutpage = () => {
           </p>
           <Service />
         </section>
-        <section className="">
+        <section className=" ">
           {/* count */}
           <Count />
+        </section>
+        <section className=" mt-10 ">
+          <h1 className=" font-bold text-3xl text-center">
+            <span className=" text-sky-500">Our</span> Collaborations
+          </h1>
+          <p className=" text-center mt-4">
+            We partner with world-class beverage brands to bring you authentic
+            and refreshing drinks.
+          </p>
+          <article className=" mt-10">
+            {" "}
+            <Marquees />
+          </article>
+        </section>
+        <section>
+          <h1 className=" font-bold text-3xl text-center">
+            <span className=" text-green-500">Share</span> Your Experience
+          </h1>
         </section>
       </section>
     </>

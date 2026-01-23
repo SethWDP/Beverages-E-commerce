@@ -66,7 +66,7 @@ const StatCard = ({ endValue, label, description, delay = 0 }) => {
 
 export default function Count() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className=" bg-gray-50">
       {/* Stats Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row justify-around gap-10 max-w-7xl mx-auto">
