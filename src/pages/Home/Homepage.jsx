@@ -51,47 +51,55 @@ const Homepage = () => {
           <Service />
         </section>
 
-        <section className="poster-ads w-full h-[65vh] flex justify-between">
-          <article className="w-[39%] h-auto">
+        <section className="w-full flex flex-col gap-4 lg:flex-row lg:justify-between lg:h-[65vh]">
+          {/* Left big */}
+          <article className="w-full lg:w-[39%] h-[250px] sm:h-[350px] lg:h-full">
             <img
-              className=" w-full h-full object-fit"
+              className="w-full h-full object-cover rounded-md"
               src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/489697449_1081441190695298_9057656553511109265_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=86c6b0&_nc_ohc=iZLuAd9OZdwQ7kNvwGNXx_1&_nc_oc=AdlA15D4NUArQZrjJFNsbhDEaDlAk7gBcVoT5iAzy-QO0oOXEIPP-D3ulznsjBHCLMQ&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=85HExs6awFkpETkkPU2ZDA&oh=00_AfqBeYjHHsTMgoJAd325kk1SapaX5TnHA3UTsR2IffO5wA&oe=697D0A2F"
               alt="ads-img"
             />
           </article>
-          <article className="-600 w-[39%] h-auto flex flex-col justify-between ">
-            <div className="w-full h-[39%]">
+
+          {/* Middle column */}
+          <article className="w-full lg:w-[39%] flex flex-col gap-4 lg:h-full">
+            <div className="w-full h-[200px] sm:h-[260px] lg:h-[39%]">
               <img
-                className=" w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-md"
                 src="https://cdn.i.haymarketmedia.asia/?n=campaign-asia/content/04-Cambodia-Beer-Cred.jpg"
                 alt="ads"
               />
             </div>
-            <div className="w-full h-[59%] flex justify-between">
-              <div className=" w-[49%] h-auto">
+
+            <div className="w-full flex flex-col sm:flex-row gap-4 lg:h-[59%]">
+              <div className="w-full sm:w-1/2 h-[200px] sm:h-auto">
                 <img
-                  className=" w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-md"
                   src="https://www.ad-wow.com/brandpage/images/ys_brpg1_Plasma_ads_s.png"
                   alt="ads"
                 />
               </div>
-              <div className=" w-[49%] h-auto">
+
+              <div className="w-full sm:w-1/2 h-[200px] sm:h-auto">
                 <img
-                  className=" w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-md"
                   src="https://image.isu.pub/221202111849-ed89bda5ac2e943c88ae107d4f5d60ca/jpg/page_1_social_preview.jpg"
                   alt="ads"
                 />
               </div>
             </div>
           </article>
-          <article className="  w-[20%] h-auto">
+
+          {/* Right tall */}
+          <article className="w-full lg:w-[20%] h-[250px] sm:h-[350px] lg:h-full">
             <img
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-md"
               src="https://images.openfoodfacts.org/images/products/884/710/074/2247/front_en.13.full.jpg"
-              alt=""
+              alt="ads"
             />
           </article>
         </section>
+
         {/* Promotional Ads Section */}
 
         {/* Banner Ads Section */}
@@ -101,6 +109,7 @@ const Homepage = () => {
           </h1>
           <FGD />
         </section>
+        {/* top rate drink */}
         <section className="top-rate flex flex-col lg:flex-row gap-4 justify-between">
           <article className="top-rate1 w-full lg:w-[49%] h-[150px] md:h-[200px] lg:h-150 bg-red-300">
             <h1 className="font-bold text-3xl text-white p-25">
