@@ -1,42 +1,87 @@
-import { BiHeart } from "react-icons/bi";
-import AddToCart from "../Button/AddToCart.jsx";
-const ProductCard = ({ img, name, category, priceR, priceD }) => {
+import Card from "./Card.jsx";
+import F1 from "../../../assets/Product_Img/Freshy.png";
+import { Carousel } from "primereact/carousel";
+import "./productCard.css";
+
+const ProductCard = () => {
+  const mostSellingProducts = [
+    {
+      id: "f1",
+      name: "ទឹកបរិសុទ្ធកម្ពុជា​ 500ml",
+      category: "Mineral Water",
+      priceR: "៛1,000",
+      priceD: "$0.25",
+      img: F1,
+    },
+    {
+      id: "f2",
+      name: "ទឹកបរិសុទ្ធកម្ពុជា​ 500ml",
+      category: "Mineral Water",
+      priceR: "៛1,000",
+      priceD: "$0.25",
+      img: F1,
+    },
+    {
+      id: "f3",
+      name: "ទឹកបរិសុទ្ធកម្ពុជា​ 500ml",
+      category: "Mineral Water",
+      priceR: "៛1,000",
+      priceD: "$0.25",
+      img: F1,
+    },
+    {
+      id: "f4",
+      name: "ទឹកបរិសុទ្ធកម្ពុជា​ 500ml",
+      category: "Mineral Water",
+      priceR: "៛1,000",
+      priceD: "$0.25",
+      img: F1,
+    },
+    {
+      id: "f5",
+      name: "ទឹកបរិសុទ្ធកម្ពុជា​ 500ml",
+      category: "Mineral Water",
+      priceR: "៛1,000",
+      priceD: "$0.25",
+      img: F1,
+    },
+  ];
+
+  // Like the official demo
+  const responsiveOptions = [
+    { breakpoint: "1400px", numVisible: 5, numScroll: 1 },
+    { breakpoint: "1199px", numVisible: 3, numScroll: 1 },
+    { breakpoint: "767px", numVisible: 2, numScroll: 1 },
+    { breakpoint: "575px", numVisible: 1, numScroll: 1 },
+  ];
+
+  const productTemplate = (p) => {
+    return (
+      <div className="flex justify-center">
+        <Card
+          img={p.img}
+          name={p.name}
+          category={p.category}
+          priceR={p.priceR}
+          priceD={p.priceD}
+        />
+      </div>
+    );
+  };
+
   return (
-    <article className="w-[250px] h-80 rounded-xl shadow-md hover:shadow-lg transition p-4 my-10">
-      {/* Image */}
-      <div className="flex justify-center items-center h-[65%] ">
-        <img src={img} alt={name} className="h-full object-cover" />
-      </div>
-
-      {/* Content */}
-      <div className="mt-5">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <h3 className="font-extrabold text-[1rem] uppercase leading-tight truncate">
-              {name}
-            </h3>
-            <p className="text-[0.9rem] text-gray-500">{category}</p>
-          </div>
-
-          {/* Heart icon */}
-          <button className="text-gray-400 hover:text-red-500 transition mt-1">
-            <BiHeart size={25} />
-          </button>
-        </div>
-
-        {/* Price + Button */}
-        <div className="mt-3 flex items-center justify-between">
-          <div className="flex items-baseline gap-2">
-            <span className="text-[0.9rem] font-bold text-green-600">
-              {priceR}
-            </span>
-            <span className="text-[12px] text-gray-600">{priceD}</span>
-          </div>
-
-          <AddToCart />
-        </div>
-      </div>
-    </article>
+    <div className="card">
+      <Carousel
+        value={mostSellingProducts}
+        numVisible={5}
+        numScroll={1}
+        responsiveOptions={responsiveOptions}
+        itemTemplate={productTemplate}
+        circular
+        autoplayInterval={4000}
+        showIndicators
+      />
+    </div>
   );
 };
 

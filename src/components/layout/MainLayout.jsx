@@ -4,13 +4,9 @@ import Footer from "../layout/Footer";
 import {
   FiSearch,
   FiShoppingCart,
-  FiUser,
   FiChevronDown,
   FiHeart,
   FiBell,
-  FiPlus,
-  FiMinus,
-  FiTrash2,
   FiX,
 } from "react-icons/fi";
 import { MdOutlineAccountCircle } from "react-icons/md";
@@ -22,6 +18,7 @@ const AnimatedBurgerIcon = ({ isOpen, onClick }) => {
       className="md:hidden w-6 h-6 flex flex-col justify-center items-center relative"
       onClick={onClick}
       aria-label="Toggle menu"
+      type="button"
     >
       <span
         className={`absolute w-6 h-0.5 bg-gray-700 transition-all duration-300 ease-in-out ${
@@ -44,95 +41,41 @@ const AnimatedBurgerIcon = ({ isOpen, onClick }) => {
 
 const MainLayout = () => {
   const navigate = useNavigate();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
+
+  // Cart drawer (no cart items logic anymore)
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Fresh Orange Juice",
-      price: 4.99,
-      quantity: 2,
-      image: "https://picsum.photos/seed/juice1/60/60.jpg",
-    },
-    {
-      id: 2,
-      name: "Green Tea",
-      price: 3.49,
-      quantity: 1,
-      image: "https://picsum.photos/seed/tea1/60/60.jpg",
-    },
-  ]);
 
   const categoriesRef = useRef(null);
   const mobileCategoriesRef = useRef(null);
-  const cartRef = useRef(null);
-  const mobileCartRef = useRef(null);
-  const mobileCartContentRef = useRef(null);
+  const cartDrawerRef = useRef(null);
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-    if (isMobileMenuOpen) {
-      setIsMobileCategoriesOpen(false);
-    }
-    if (!isMobileMenuOpen) {
-      setIsCartOpen(false);
-    }
+    setIsMobileMenuOpen((v) => !v);
+    // close mobile categories when closing menu
+    if (isMobileMenuOpen) setIsMobileCategoriesOpen(false);
+    // close cart when opening menu
+    if (!isMobileMenuOpen) setIsCartOpen(false);
   };
 
-  const toggleCategories = () => {
-    setIsCategoriesOpen(!isCategoriesOpen);
-  };
+  const toggleCategories = () => setIsCategoriesOpen((v) => !v);
+  const toggleMobileCategories = () => setIsMobileCategoriesOpen((v) => !v);
 
-  const toggleMobileCategories = () => {
-    setIsMobileCategoriesOpen(!isMobileCategoriesOpen);
+  const openCart = () => {
+    setIsCartOpen(true);
+    setIsMobileMenuOpen(false);
   };
+  const closeCart = () => setIsCartOpen(false);
+  const toggleCart = () => setIsCartOpen((v) => !v);
 
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-    if (isMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
-    }
-  };
-
-  const closeCart = () => {
-    setIsCartOpen(false);
-  };
-
-  const updateQuantity = (id, change) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item,
-      ),
-    );
-  };
-
-  const removeItem = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
-  };
-
-  const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  };
-
-  const getTotalPrice = () => {
-    return cartItems
-      .reduce((total, item) => total + item.price * item.quantity, 0)
-      .toFixed(2);
-  };
-
-  // Handle backdrop click with better logic
   const handleBackdropClick = (e) => {
-    // Only close if clicking directly on the backdrop (not on children)
-    if (e.target === e.currentTarget) {
-      closeCart();
-    }
+    if (e.target === e.currentTarget) closeCart();
   };
 
-  // Close dropdowns when clicking outside
+  // Close dropdowns/drawer when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -147,18 +90,21 @@ const MainLayout = () => {
       ) {
         setIsMobileCategoriesOpen(false);
       }
-      if (cartRef.current && !cartRef.current.contains(event.target)) {
-        setIsCartOpen(false);
+      // close drawer if click is outside the drawer when it's open
+      if (
+        isCartOpen &&
+        cartDrawerRef.current &&
+        !cartDrawerRef.current.contains(event.target)
+      ) {
+        // This is mostly redundant because backdrop handles it, but it's safe.
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isCartOpen]);
 
-  // Close cart on escape key
+  // Close on escape
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === "Escape") {
@@ -166,11 +112,8 @@ const MainLayout = () => {
         setIsMobileMenuOpen(false);
       }
     };
-
     document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-    };
+    return () => document.removeEventListener("keydown", handleEscape);
   }, []);
 
   return (
@@ -196,7 +139,10 @@ const MainLayout = () => {
                   placeholder="Search products..."
                   className="w-full py-2 px-4 pr-10 border border-gray-300 rounded-l focus:outline-none focus:border-blue-500"
                 />
-                <button className="absolute right-0 top-0 bottom-0 px-3 flex items-center">
+                <button
+                  className="absolute right-0 top-0 bottom-0 px-3 flex items-center"
+                  type="button"
+                >
                   <FiSearch className="text-gray-500" />
                 </button>
               </div>
@@ -204,112 +150,20 @@ const MainLayout = () => {
 
             {/* Right side icons - Hidden on mobile */}
             <div className="hidden md:flex items-center space-x-4">
-              <div className="relative" ref={cartRef}>
-                <button
-                  onClick={toggleCart}
-                  className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition"
-                >
-                  <FiShoppingCart className="text-xl" />
-                  <span className="text-sm">{getTotalItems()} items</span>
-                </button>
+              <button
+                onClick={toggleCart}
+                className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition"
+                type="button"
+              >
+                <FiShoppingCart className="text-xl" />
+                <span className="text-sm">Cart</span>
+              </button>
 
-                {/* Cart Dropdown */}
-                <div
-                  className={`absolute right-0 mt-2 bg-white shadow-xl rounded-lg w-96 transition-all duration-200 origin-top ${
-                    isCartOpen
-                      ? "opacity-100 scale-100"
-                      : "opacity-0 scale-95 pointer-events-none"
-                  }`}
-                >
-                  <div className="p-4 border-b border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-gray-800">
-                        Shopping Cart
-                      </h3>
-                      <button
-                        onClick={closeCart}
-                        className="text-gray-400 hover:text-gray-600"
-                      >
-                        <FiX className="text-xl" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="max-h-96 overflow-y-auto">
-                    {cartItems.length === 0 ? (
-                      <div className="p-8 text-center text-gray-500">
-                        <FiShoppingCart className="text-4xl mx-auto mb-2 text-gray-300" />
-                        <p>Your cart is empty</p>
-                      </div>
-                    ) : (
-                      <div className="p-4 space-y-4">
-                        {cartItems.map((item) => (
-                          <div
-                            key={item.id}
-                            className="flex items-center space-x-4 p-3 hover:bg-gray-50 rounded-lg transition"
-                          >
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-16 h-16 object-cover rounded-md"
-                            />
-                            <div className="flex-1">
-                              <h4 className="font-medium text-gray-800 text-sm">
-                                {item.name}
-                              </h4>
-                              <p className="text-blue-600 font-semibold">
-                                ${item.price}
-                              </p>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <button
-                                onClick={() => updateQuantity(item.id, -1)}
-                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition"
-                              >
-                                <FiMinus className="text-xs" />
-                              </button>
-                              <span className="w-8 text-center font-medium">
-                                {item.quantity}
-                              </span>
-                              <button
-                                onClick={() => updateQuantity(item.id, 1)}
-                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition"
-                              >
-                                <FiPlus className="text-xs" />
-                              </button>
-                            </div>
-                            <button
-                              onClick={() => removeItem(item.id)}
-                              className="text-red-500 hover:text-red-700 transition"
-                            >
-                              <FiTrash2 className="text-lg" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {cartItems.length > 0 && (
-                    <div className="p-4 border-t border-gray-200">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="font-semibold text-gray-800">
-                          Total:
-                        </span>
-                        <span className="text-xl font-bold text-blue-600">
-                          ${getTotalPrice()}
-                        </span>
-                      </div>
-                      <button className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
-                        Proceed to Checkout
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <button className="flex gap-2 px-4 py-2 text-black  transition">
-                <MdOutlineAccountCircle className="text-2xl text-gray-700" />{" "}
+              <button
+                className="flex gap-2 px-4 py-2 text-black transition"
+                type="button"
+              >
+                <MdOutlineAccountCircle className="text-2xl text-gray-700" />
                 Account
               </button>
             </div>
@@ -321,14 +175,15 @@ const MainLayout = () => {
             />
           </div>
 
-          {/* Navigation Bar - Modified to center navigation links */}
+          {/* Navigation Bar */}
           <nav className="hidden md:flex items-center justify-between py-3 border-t border-gray-200">
-            {/* Left section - Categories dropdown */}
+            {/* Left - Categories */}
             <div className="flex items-center">
               <div className="relative" ref={categoriesRef}>
                 <button
                   className="flex items-center space-x-1 px-4 py-2 text-white bg-[#178ED8] hover:bg-blue-400 font-bold transition"
                   onClick={toggleCategories}
+                  type="button"
                 >
                   <span>All Categories</span>
                   <FiChevronDown
@@ -338,7 +193,6 @@ const MainLayout = () => {
                   />
                 </button>
 
-                {/* Categories dropdown */}
                 <div
                   className={`absolute left-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-48 transition-all duration-200 origin-top ${
                     isCategoriesOpen
@@ -380,7 +234,7 @@ const MainLayout = () => {
               </div>
             </div>
 
-            {/* Center section - Navigation links */}
+            {/* Center links */}
             <div className="flex-1 flex justify-center">
               <div className="flex space-x-20">
                 <Link
@@ -416,10 +270,13 @@ const MainLayout = () => {
               </div>
             </div>
 
-            {/* Right section - Notification icons */}
+            {/* Right icons */}
             <div className="flex items-center space-x-4">
               <Link to="/favorite">
-                <button className="text-gray-700 hover:text-blue-600 transition relative">
+                <button
+                  className="text-gray-700 hover:text-blue-600 transition relative"
+                  type="button"
+                >
                   <FiHeart className="text-2xl" />
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                     2
@@ -427,7 +284,10 @@ const MainLayout = () => {
                 </button>
               </Link>
 
-              <button className="text-gray-700 hover:text-blue-600 transition relative">
+              <button
+                className="text-gray-700 hover:text-blue-600 transition relative"
+                type="button"
+              >
                 <FiBell className="text-2xl" />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                   5
@@ -452,7 +312,10 @@ const MainLayout = () => {
                     placeholder="Search products..."
                     className="w-full py-2 px-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:border-blue-500"
                   />
-                  <button className="absolute right-0 top-0 bottom-0 px-3 flex items-center">
+                  <button
+                    className="absolute right-0 top-0 bottom-0 px-3 flex items-center"
+                    type="button"
+                  >
                     <FiSearch className="text-gray-500" />
                   </button>
                 </div>
@@ -461,6 +324,7 @@ const MainLayout = () => {
                   <button
                     className="flex items-center justify-between w-full py-2 text-gray-700 hover:text-blue-600 transition"
                     onClick={toggleMobileCategories}
+                    type="button"
                   >
                     <span>All Categories</span>
                     <FiChevronDown
@@ -545,26 +409,31 @@ const MainLayout = () => {
 
                 <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                   <button
-                    onClick={toggleCart}
-                    className="flex items-center space-x-1 text-gray-700"
+                    onClick={openCart}
+                    className="flex items-center space-x-2 text-gray-700"
+                    type="button"
                   >
                     <FiShoppingCart className="text-3xl" />
-                    <span className="text-sm">{getTotalItems()} items</span>
+                    <span className="text-sm">Cart</span>
                   </button>
-                  <button className="flex gap-2 px-4 py-2 text-black  transition">
-                    <MdOutlineAccountCircle className="text-3xl text-gray-700" />{" "}
+
+                  <button
+                    className="flex gap-2 px-4 py-2 text-black transition"
+                    type="button"
+                  >
+                    <MdOutlineAccountCircle className="text-3xl text-gray-700" />
                     Account
                   </button>
                 </div>
 
                 <div className="flex items-center justify-center space-x-6 pt-2">
-                  <button className="text-gray-700 relative">
+                  <button className="text-gray-700 relative" type="button">
                     <FiHeart className="text-3xl" />
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                       2
                     </span>
                   </button>
-                  <button className="text-gray-700 relative">
+                  <button className="text-gray-700 relative" type="button">
                     <FiBell className="text-3xl" />
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                       5
@@ -577,124 +446,48 @@ const MainLayout = () => {
         </div>
       </header>
 
-      {/* Mobile Cart Modal - Completely rewritten with better event handling */}
-      {isCartOpen && (
+      {/* Right-side Cart Drawer (responsive) */}
+      <div
+        className={`fixed inset-0 z-50 ${isCartOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+        aria-hidden={!isCartOpen}
+      >
+        {/* Backdrop */}
         <div
-          ref={mobileCartRef}
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end md:hidden"
+          className={`absolute inset-0 bg-black transition-opacity duration-300 ease-out ${
+            isCartOpen ? "opacity-50" : "opacity-0"
+          }`}
           onClick={handleBackdropClick}
+        />
+
+        {/* Drawer */}
+        <aside
+          ref={cartDrawerRef}
+          className={`absolute right-0 top-0 h-full w-[22rem] max-w-[90vw] bg-white shadow-2xl transition-transform duration-300 ease-out ${
+            isCartOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
-          <div
-            ref={mobileCartContentRef}
-            className="bg-white w-full max-h-[80vh] overflow-hidden rounded-t-2xl animate-slide-up"
-          >
-            <div className="p-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-gray-800">Shopping Cart</h3>
-                <button
-                  onClick={closeCart}
-                  className="text-gray-400 hover:text-gray-600 p-1"
-                >
-                  <FiX className="text-xl" />
-                </button>
-              </div>
-            </div>
-
-            <div className="max-h-96 overflow-y-auto p-4">
-              {cartItems.length === 0 ? (
-                <div className="text-center text-gray-500 py-8">
-                  <FiShoppingCart className="text-4xl mx-auto mb-2 text-gray-300" />
-                  <p>Your cart is empty</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {cartItems.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg"
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-16 h-16 object-cover rounded-md"
-                      />
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-800 text-sm">
-                          {item.name}
-                        </h4>
-                        <p className="text-blue-600 font-semibold">
-                          ${item.price}
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() => updateQuantity(item.id, -1)}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition active:bg-gray-200"
-                          type="button"
-                        >
-                          <FiMinus className="text-xs" />
-                        </button>
-                        <span className="w-8 text-center font-medium">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => updateQuantity(item.id, 1)}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition active:bg-gray-200"
-                          type="button"
-                        >
-                          <FiPlus className="text-xs" />
-                        </button>
-                      </div>
-                      <button
-                        onClick={() => removeItem(item.id)}
-                        className="text-red-500 hover:text-red-700 transition p-1"
-                        type="button"
-                      >
-                        <FiTrash2 className="text-lg" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {cartItems.length > 0 && (
-              <div className="p-4 border-t border-gray-200">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-semibold text-gray-800">Total:</span>
-                  <span className="text-xl font-bold text-blue-600">
-                    ${getTotalPrice()}
-                  </span>
-                </div>
-                <button
-                  className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition active:bg-blue-800"
-                  type="button"
-                >
-                  Proceed to Checkout
-                </button>
-              </div>
-            )}
+          <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+            <h3 className="font-semibold text-gray-800">Shopping Cart</h3>
+            <button
+              onClick={closeCart}
+              className="text-gray-400 hover:text-gray-600 p-1"
+              type="button"
+            >
+              <FiX className="text-xl" />
+            </button>
           </div>
-        </div>
-      )}
+
+          {/* Content placeholder (no add-to-cart feature) */}
+          <div className="p-6 text-gray-600">
+            <p className="text-sm">You are not order yet</p>
+          </div>
+        </aside>
+      </div>
 
       <main className="p-4">
         <Outlet />
       </main>
 
-      <style jsx>{`
-        @keyframes slide-up {
-          from {
-            transform: translateY(100%);
-          }
-          to {
-            transform: translateY(0);
-          }
-        }
-        .animate-slide-up {
-          animation: slide-up 0.3s ease-out;
-        }
-      `}</style>
       <footer>
         <Footer />
       </footer>
