@@ -1,0 +1,60 @@
+.bg-banner {
+  background-image: url("https://torontolife.mblycdn.com/tl/resized/2024/05/w1280/toronto-stores-sobr-market-non-alcoholic-bottle-shop-queen-west-ready-to-drink-1-scaled.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero {
+  position: relative;
+  height: 45vh;
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* overlay */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding: 0 16px;
+  color: #fff;
+}
+
+.hero__content h1 {
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  font-size: clamp(2rem, 4vw, 4rem);
+}
+
+.hero__content p {
+  margin-top: 10px;
+  opacity: 0.9;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+}
+
+.hero__btn {
+  margin-top: 22px;
+  padding: 12px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.hero__btn:hover {
+  background: #fff;
+  color: #000;
+}
