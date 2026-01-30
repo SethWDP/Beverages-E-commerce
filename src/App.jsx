@@ -4,15 +4,10 @@ import Homepage from "./pages/Home/Homepage";
 import Aboutpage from "./pages/About/Aboutpage";
 import Contactpage from "./pages/Contact/Contactpage";
 import Favoritepage from "./pages/Favorite/Favoritepage";
-import Login from "./pages/Account/LogIn";
 import CreateAcc from "./pages/Account/CreateAccount";
 import Shoppage from "./pages/Shop/Shoppage";
-import Beer from "./pages/Shop/Beer";
-import Water from "./pages/Shop/Waterpage";
-import Juice from "./pages/Shop/Juicepage";
-import Energy from "./pages/Shop/Energypage";
-import Soft from "./pages/Shop/Softdrinkpage";
-import Error404 from "./pages/Error404/Error404";
+import Error404 from "./pages/Error404";
+import CategoryPage from "./pages/Shop/CategoryPage";
 
 function App() {
   return (
@@ -23,14 +18,10 @@ function App() {
           <Route path="/about" element={<Aboutpage />} />
           <Route path="/contact" element={<Contactpage />} />
           <Route path="/favorite" element={<Favoritepage />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/Create_Account" element={<CreateAcc />} />
           <Route path="/shop" element={<Shoppage />} />
-          <Route path="/shop/beer" element={<Beer />} />
-          <Route path="/shop/water" element={<Water />} />
-          <Route path="/shop/juice" element={<Juice />} />
-          <Route path="/shop/energydrink" element={<Energy />} />
-          <Route path="/shop/softdrink" element={<Soft />} />
+          <Route path="/shop/:category" element={<CategoryPage />} />
+          {/* <Route path="/cart" element={< />} /> */}
           <Route path="/*" element={<Error404 />} />
         </Route>
       </Routes>
