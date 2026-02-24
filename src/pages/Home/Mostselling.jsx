@@ -1,4 +1,4 @@
-import ProductCard from "../../components/UI/Card/ProductCard";
+import ProductCard from "../../components/ui/card/ProductCard";
 
 const Mostselling = () => {
   return (

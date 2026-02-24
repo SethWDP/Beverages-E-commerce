@@ -4,6 +4,7 @@ import b1 from "../../assets/banner/kbbanner.jpeg";
 import { Link } from "react-router-dom";
 import products from "../../data/product";
 import ProductList from "../../components/product/ProductList";
+import TestCart from "../../context/TestCart";
 
 const Shoppage = () => {
   return (
@@ -72,6 +73,7 @@ const Shoppage = () => {
       </section>
 
       {/* CATEGORY SECTIONS */}
+      {/* <TestCart /> */}
       <section id="products" className="w-full mt-16 space-y-14">
         {/* Water */}
         <div>

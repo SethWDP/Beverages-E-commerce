@@ -245,10 +245,67 @@ const Aboutpage = () => {
             <Marquees />
           </article>
         </section>
-        <section>
-          <h1 className=" font-bold text-3xl text-center">
-            <span className=" text-green-500">Share</span> Your Experience
-          </h1>
+        <section className="min-h-screen bg-white flex items-center justify-center px-4 py-12">
+          <div className="w-full max-w-3xl">
+            {/* Title */}
+            <h1 className="text-center text-3xl md:text-4xl font-extrabold tracking-tight">
+              <span className="text-sky-500">Share</span>{" "}
+              <span className="text-gray-700">Your Experience</span>
+            </h1>
+
+            <p className="text-center text-gray-500 mt-3">
+              Your feedback helps us improve our service
+            </p>
+
+            {/* Card */}
+            <div className="mt-10 bg-gray-50 border border-gray-200 rounded-lg shadow-sm p-6 md:p-10">
+              <form className="space-y-6">
+                {/* Label */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Your Feedback
+                  </label>
+
+                  <textarea
+                    rows={7}
+                    placeholder="Tell us about your experience with Daily Drinks..."
+                    className="w-full rounded-md border border-gray-300 bg-white p-4 text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                  />
+                </div>
+
+                {/* Rating */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-2">
+                  <span className="text-sm font-semibold text-gray-700">
+                    Overall Experience
+                  </span>
+
+                  {/* simple visual stars (swap for buttons if you want clickable) */}
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg
+                        key={i}
+                        viewBox="0 0 20 20"
+                        className="h-5 w-5 fill-yellow-400"
+                        aria-hidden="true"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.965a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.373 2.452a1 1 0 00-.364 1.118l1.287 3.965c.3.921-.755 1.688-1.54 1.118l-3.373-2.452a1 1 0 00-1.175 0l-3.373 2.452c-.784.57-1.838-.197-1.539-1.118l1.287-3.965a1 1 0 00-.364-1.118L2.805 9.392c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.965z" />
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Button */}
+                <div className="flex justify-center pt-2">
+                  <button
+                    type="submit"
+                    className="rounded-md bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  >
+                    Submit Feedback
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </section>
       </section>
     </>

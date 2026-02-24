@@ -1,4 +1,8 @@
 .top-rate1 {
-  background-image: url("../../assets/banner/marindagreen1.jpg");
+  background-image: url("../../assets/banner/posterdrink.png");
   background-position: center;
+  height: 27rem;
+}
+.rt-por-card {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

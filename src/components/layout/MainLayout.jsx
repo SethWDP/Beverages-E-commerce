@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef, useContext } from "react";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import Footer from "../layout/Footer";
 import {
   FiSearch,
@@ -10,12 +10,12 @@ import {
   FiX,
 } from "react-icons/fi";
 import { MdOutlineAccountCircle } from "react-icons/md";
+import { CartContext } from "../../context/CartContext";
 
-// Custom Animated Burger Icon Component
 const AnimatedBurgerIcon = ({ isOpen, onClick }) => {
   return (
     <button
-      className="md:hidden w-6 h-6 flex flex-col justify-center items-center relative"
+      className="md:hidden w-10 h-10 flex flex-col justify-center items-center relative"
       onClick={onClick}
       aria-label="Toggle menu"
       type="button"
@@ -41,12 +41,21 @@ const AnimatedBurgerIcon = ({ isOpen, onClick }) => {
 
 const MainLayout = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  // cart from context
+  const {
+    cartItems,
+    totalQty,
+    totalPrice,
+    increaseQty,
+    decreaseQty,
+    removeFromCart,
+  } = useContext(CartContext);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
-
-  // Cart drawer (no cart items logic anymore)
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const categoriesRef = useRef(null);
@@ -55,10 +64,8 @@ const MainLayout = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((v) => !v);
-    // close mobile categories when closing menu
-    if (isMobileMenuOpen) setIsMobileCategoriesOpen(false);
-    // close cart when opening menu
-    if (!isMobileMenuOpen) setIsCartOpen(false);
+    // when opening menu, close cart
+    setIsCartOpen(false);
   };
 
   const toggleCategories = () => setIsCategoriesOpen((v) => !v);
@@ -67,6 +74,7 @@ const MainLayout = () => {
   const openCart = () => {
     setIsCartOpen(true);
     setIsMobileMenuOpen(false);
+    setIsMobileCategoriesOpen(false);
   };
   const closeCart = () => setIsCartOpen(false);
   const toggleCart = () => setIsCartOpen((v) => !v);
@@ -75,36 +83,35 @@ const MainLayout = () => {
     if (e.target === e.currentTarget) closeCart();
   };
 
-  // Close dropdowns/drawer when clicking outside
+  // close menus when route changes (nice UX)
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsMobileCategoriesOpen(false);
+    setIsCategoriesOpen(false);
+    setIsCartOpen(false);
+  }, [pathname]);
+
+  // click outside for desktop categories + mobile categories
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         categoriesRef.current &&
         !categoriesRef.current.contains(event.target)
-      ) {
+      )
         setIsCategoriesOpen(false);
-      }
+
       if (
         mobileCategoriesRef.current &&
         !mobileCategoriesRef.current.contains(event.target)
-      ) {
+      )
         setIsMobileCategoriesOpen(false);
-      }
-      // close drawer if click is outside the drawer when it's open
-      if (
-        isCartOpen &&
-        cartDrawerRef.current &&
-        !cartDrawerRef.current.contains(event.target)
-      ) {
-        // This is mostly redundant because backdrop handles it, but it's safe.
-      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isCartOpen]);
+  }, []);
 
-  // Close on escape
+  // escape key close
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === "Escape") {
@@ -120,183 +127,259 @@ const MainLayout = () => {
     <>
       <header className="bg-white shadow-sm sticky top-0 z-40">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-4">
-            {/* Logo */}
-            <div className="flex items-center">
-              <h1
-                className="text-2xl font-bold text-[#178ED8] cursor-pointer"
-                onClick={() => navigate("/")}
-              >
-                DailyDrinks
-              </h1>
+          {/* =============== MOBILE HEADER (center logo like your screenshot) =============== */}
+          <div className="md:hidden py-3">
+            {/* Row 1: burger | centered logo | icons */}
+            <div className="grid grid-cols-3 items-center">
+              {/* Left: Burger */}
+              <div className="justify-self-start">
+                <AnimatedBurgerIcon
+                  isOpen={isMobileMenuOpen}
+                  onClick={toggleMobileMenu}
+                />
+              </div>
+
+              {/* Center: Logo */}
+              <div className="justify-self-center">
+                <h1
+                  className="text-xl font-bold text-[#178ED8] cursor-pointer flex items-center gap-1"
+                  onClick={() => navigate("/")}
+                >
+                  DailyDrinks
+                </h1>
+              </div>
+
+              {/* Right: Icons */}
+              <div className="justify-self-end flex items-center gap-5">
+                <Link to="/favorite" className="relative text-gray-700">
+                  <FiHeart className="text-xl" />
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                    2
+                  </span>
+                </Link>
+
+                <button
+                  onClick={openCart}
+                  type="button"
+                  className="relative text-gray-700"
+                >
+                  <FiShoppingCart className="text-xl" />
+                  {totalQty > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                      {totalQty}
+                    </span>
+                  )}
+                </button>
+
+                <button type="button" className="text-gray-700">
+                  <MdOutlineAccountCircle className="text-2xl" />
+                </button>
+              </div>
             </div>
 
-            {/* Search Bar - Hidden on mobile */}
-            <div className="hidden md:flex flex-1 max-w-lg mx-8">
-              <div className="relative w-full">
+            {/* Row 2: Full-width Search */}
+            <div className="mt-3">
+              <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search products..."
-                  className="w-full py-2 px-4 pr-10 border border-gray-300 rounded-l focus:outline-none focus:border-blue-500"
+                  placeholder="Search..."
+                  className="w-full h-10 pl-4 pr-10 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 />
                 <button
-                  className="absolute right-0 top-0 bottom-0 px-3 flex items-center"
                   type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2"
+                  aria-label="Search"
                 >
                   <FiSearch className="text-gray-500" />
                 </button>
               </div>
             </div>
-
-            {/* Right side icons - Hidden on mobile */}
-            <div className="hidden md:flex items-center space-x-4">
-              <button
-                onClick={toggleCart}
-                className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition"
-                type="button"
-              >
-                <FiShoppingCart className="text-xl" />
-                <span className="text-sm">Cart</span>
-              </button>
-
-              <button
-                className="flex gap-2 px-4 py-2 text-black transition"
-                type="button"
-              >
-                <MdOutlineAccountCircle className="text-2xl text-gray-700" />
-                Account
-              </button>
-            </div>
-
-            {/* Animated Mobile menu button */}
-            <AnimatedBurgerIcon
-              isOpen={isMobileMenuOpen}
-              onClick={toggleMobileMenu}
-            />
           </div>
 
-          {/* Navigation Bar */}
-          <nav className="hidden md:flex items-center justify-between py-3 border-t border-gray-200">
-            {/* Left - Categories */}
-            <div className="flex items-center">
-              <div className="relative" ref={categoriesRef}>
+          {/* =============== DESKTOP HEADER =============== */}
+          <div className="hidden md:block">
+            <div className="flex items-center justify-between py-4">
+              {/* Logo */}
+              <div className="flex items-center">
+                <h1
+                  className="text-2xl font-bold text-[#178ED8] cursor-pointer"
+                  onClick={() => navigate("/")}
+                >
+                  DailyDrinks
+                </h1>
+              </div>
+
+              {/* Search Bar */}
+              <div className="flex flex-1 max-w-lg mx-8">
+                <div className="relative w-full">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    className="w-full py-2 px-4 pr-10 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                  />
+                  <button
+                    className="absolute right-2 top-1/2 -translate-y-1/2 px-1 flex items-center"
+                    type="button"
+                    aria-label="Search"
+                  >
+                    <FiSearch className="text-gray-500" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Right icons */}
+              <div className="flex items-center space-x-4">
                 <button
-                  className="flex items-center space-x-1 px-4 py-2 text-white bg-[#178ED8] hover:bg-blue-400 font-bold transition"
-                  onClick={toggleCategories}
+                  onClick={toggleCart}
+                  className="relative flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition"
                   type="button"
                 >
-                  <span>All Categories</span>
-                  <FiChevronDown
-                    className={`transform transition-transform duration-200 ${
-                      isCategoriesOpen ? "rotate-180" : ""
-                    }`}
-                  />
+                  <FiShoppingCart className="text-xl" />
+                  <span className="text-sm">Cart</span>
+
+                  {totalQty > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {totalQty}
+                    </span>
+                  )}
                 </button>
 
-                <div
-                  className={`absolute left-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-48 transition-all duration-200 origin-top ${
-                    isCategoriesOpen
-                      ? "opacity-100 scale-100"
-                      : "opacity-0 scale-95 pointer-events-none"
-                  }`}
+                <button
+                  className="flex gap-2 px-4 py-2 text-black transition"
+                  type="button"
                 >
-                  <Link
-                    to={"/shop/water"}
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                  <MdOutlineAccountCircle className="text-2xl text-gray-700" />
+                  Account
+                </button>
+              </div>
+            </div>
+
+            {/* Navigation */}
+            <nav className="flex items-center justify-between py-3 border-t border-gray-200">
+              <div className="flex items-center">
+                <div className="relative" ref={categoriesRef}>
+                  <button
+                    className="flex items-center space-x-1 px-4 py-2 text-white bg-[#178ED8] hover:bg-blue-400 font-bold transition rounded-md"
+                    onClick={toggleCategories}
+                    type="button"
+                    aria-expanded={isCategoriesOpen}
+                    aria-controls="categories-menu"
                   >
-                    Water&Hydration
+                    <span>All Categories</span>
+                    <FiChevronDown
+                      className={`transform transition-transform duration-200 ${
+                        isCategoriesOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    id="categories-menu"
+                    role="menu"
+                    className={`absolute left-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-48 transition-all duration-200 origin-top z-50 ${
+                      isCategoriesOpen
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-95 pointer-events-none"
+                    }`}
+                  >
+                    <Link
+                      to="/shop/water"
+                      className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                      role="menuitem"
+                    >
+                      Water&Hydration
+                    </Link>
+                    <Link
+                      to="/shop/energydrink"
+                      className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                      role="menuitem"
+                    >
+                      Energy Drink
+                    </Link>
+                    <Link
+                      to="/shop/softdrink"
+                      className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                      role="menuitem"
+                    >
+                      Soft&Soda Drink
+                    </Link>
+                    <Link
+                      to="/shop/beer"
+                      className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                      role="menuitem"
+                    >
+                      Beer&Alcohol
+                    </Link>
+                    <Link
+                      to="/shop/juice"
+                      className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                      role="menuitem"
+                    >
+                      Juice
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex-1 flex justify-center">
+                <div className="flex space-x-20">
+                  <Link to="/" className="text-gray-700 hover:text-blue-600">
+                    Home
                   </Link>
                   <Link
-                    to="/shop/energydrink"
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                    to="/about"
+                    className="text-gray-700 hover:text-blue-600"
                   >
-                    Energy Drink
+                    About
                   </Link>
                   <Link
-                    to={"/shop/softdrink"}
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                    to="/shop"
+                    className="text-gray-700 hover:text-blue-600"
                   >
-                    Soft&Soda Drink
+                    Shop
                   </Link>
                   <Link
-                    to={"/shop/beer"}
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                    to="/reviews"
+                    className="text-gray-700 hover:text-blue-600"
                   >
-                    Beer&Alcohol
+                    Reviews
                   </Link>
                   <Link
-                    to={"/shop/juice"}
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                    to="/contact"
+                    className="text-gray-700 hover:text-blue-600"
                   >
-                    Juice
+                    Contact
                   </Link>
                 </div>
               </div>
-            </div>
 
-            {/* Center links */}
-            <div className="flex-1 flex justify-center">
-              <div className="flex space-x-20">
-                <Link
-                  to="/"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  Home
+              <div className="flex items-center space-x-4">
+                <Link to="/favorite">
+                  <button
+                    className="text-gray-700 hover:text-blue-600 transition relative"
+                    type="button"
+                  >
+                    <FiHeart className="text-2xl" />
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                      2
+                    </span>
+                  </button>
                 </Link>
-                <Link
-                  to="/about"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  About
-                </Link>
-                <Link
-                  to="/shop"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  Shop
-                </Link>
-                <Link
-                  to="/reviews"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  Reviews
-                </Link>
-                <Link
-                  to="/contact"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  Contact
-                </Link>
-              </div>
-            </div>
 
-            {/* Right icons */}
-            <div className="flex items-center space-x-4">
-              <Link to="/favorite">
                 <button
                   className="text-gray-700 hover:text-blue-600 transition relative"
                   type="button"
                 >
-                  <FiHeart className="text-2xl" />
+                  <FiBell className="text-2xl" />
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                    2
+                    5
                   </span>
                 </button>
-              </Link>
+              </div>
+            </nav>
+          </div>
 
-              <button
-                className="text-gray-700 hover:text-blue-600 transition relative"
-                type="button"
-              >
-                <FiBell className="text-2xl" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                  5
-                </span>
-              </button>
-            </div>
-          </nav>
-
-          {/* Mobile Menu */}
+          {/* =============== MOBILE MENU  =============== */}
           <div
             className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
               isMobileMenuOpen
@@ -306,20 +389,7 @@ const MainLayout = () => {
           >
             <div className="py-4 border-t border-gray-200">
               <div className="flex flex-col space-y-4">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search products..."
-                    className="w-full py-2 px-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:border-blue-500"
-                  />
-                  <button
-                    className="absolute right-0 top-0 bottom-0 px-3 flex items-center"
-                    type="button"
-                  >
-                    <FiSearch className="text-gray-500" />
-                  </button>
-                </div>
-
+                {/* categories */}
                 <div className="relative" ref={mobileCategoriesRef}>
                   <button
                     className="flex items-center justify-between w-full py-2 text-gray-700 hover:text-blue-600 transition"
@@ -343,32 +413,32 @@ const MainLayout = () => {
                   >
                     <div className="pl-4 space-y-2 pt-2">
                       <Link
-                        to={"/shop/water"}
-                        className="block py-1 text-gray-700 hover:text-blue-600 transition"
+                        to="/shop/water"
+                        className="block py-1 text-gray-700 hover:text-blue-600"
                       >
                         Water&Hydration
                       </Link>
                       <Link
                         to="/shop/energydrink"
-                        className="block py-1 text-gray-700 hover:text-blue-600 transition"
+                        className="block py-1 text-gray-700 hover:text-blue-600"
                       >
                         Energy Drink
                       </Link>
                       <Link
-                        to={"/shop/softdrink"}
-                        className="block py-1 text-gray-700 hover:text-blue-600 transition"
+                        to="/shop/softdrink"
+                        className="block py-1 text-gray-700 hover:text-blue-600"
                       >
                         Soft&Soda Drink
                       </Link>
                       <Link
-                        to={"/shop/beer"}
-                        className="block py-1 text-gray-700 hover:text-blue-600 transition"
+                        to="/shop/beer"
+                        className="block py-1 text-gray-700 hover:text-blue-600"
                       >
                         Beer&Alcohol
                       </Link>
                       <Link
-                        to={"/shop/juice"}
-                        className="block py-1 text-gray-700 hover:text-blue-600 transition"
+                        to="/shop/juice"
+                        className="block py-1 text-gray-700 hover:text-blue-600"
                       >
                         Juice
                       </Link>
@@ -376,33 +446,31 @@ const MainLayout = () => {
                   </div>
                 </div>
 
-                <Link
-                  to="/"
-                  className="py-2 text-gray-700 hover:text-blue-600 transition"
-                >
+                {/* pages */}
+                <Link to="/" className="py-2 text-gray-700 hover:text-blue-600">
                   Home
                 </Link>
                 <Link
                   to="/about"
-                  className="py-2 text-gray-700 hover:text-blue-600 transition"
+                  className="py-2 text-gray-700 hover:text-blue-600"
                 >
                   About
                 </Link>
                 <Link
                   to="/shop"
-                  className="py-2 text-gray-700 hover:text-blue-600 transition"
+                  className="py-2 text-gray-700 hover:text-blue-600"
                 >
                   Shop
                 </Link>
                 <Link
                   to="/reviews"
-                  className="py-2 text-gray-700 hover:text-blue-600 transition"
+                  className="py-2 text-gray-700 hover:text-blue-600"
                 >
                   Reviews
                 </Link>
                 <Link
                   to="/contact"
-                  className="py-2 text-gray-700 hover:text-blue-600 transition"
+                  className="py-2 text-gray-700 hover:text-blue-600"
                 >
                   Contact
                 </Link>
@@ -410,34 +478,24 @@ const MainLayout = () => {
                 <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                   <button
                     onClick={openCart}
-                    className="flex items-center space-x-2 text-gray-700"
+                    className="relative flex items-center space-x-2 text-gray-700"
                     type="button"
                   >
-                    <FiShoppingCart className="text-3xl" />
+                    <FiShoppingCart className="text-2xl" />
                     <span className="text-sm">Cart</span>
+                    {totalQty > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {totalQty}
+                      </span>
+                    )}
                   </button>
 
                   <button
                     className="flex gap-2 px-4 py-2 text-black transition"
                     type="button"
                   >
-                    <MdOutlineAccountCircle className="text-3xl text-gray-700" />
+                    <MdOutlineAccountCircle className="text-2xl text-gray-700" />
                     Account
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-center space-x-6 pt-2">
-                  <button className="text-gray-700 relative" type="button">
-                    <FiHeart className="text-3xl" />
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                      2
-                    </span>
-                  </button>
-                  <button className="text-gray-700 relative" type="button">
-                    <FiBell className="text-3xl" />
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                      5
-                    </span>
                   </button>
                 </div>
               </div>
@@ -446,12 +504,13 @@ const MainLayout = () => {
         </div>
       </header>
 
-      {/* Right-side Cart Drawer (responsive) */}
+      {/* Cart Drawer */}
       <div
-        className={`fixed inset-0 z-50 ${isCartOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed inset-0 z-50 ${
+          isCartOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
         aria-hidden={!isCartOpen}
       >
-        {/* Backdrop */}
         <div
           className={`absolute inset-0 bg-black transition-opacity duration-300 ease-out ${
             isCartOpen ? "opacity-50" : "opacity-0"
@@ -459,27 +518,101 @@ const MainLayout = () => {
           onClick={handleBackdropClick}
         />
 
-        {/* Drawer */}
         <aside
           ref={cartDrawerRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Shopping cart"
           className={`absolute right-0 top-0 h-full w-[22rem] max-w-[90vw] bg-white shadow-2xl transition-transform duration-300 ease-out ${
             isCartOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-800">Shopping Cart</h3>
+            <h3 className="font-semibold text-gray-800">
+              Shopping Cart {totalQty > 0 ? `(${totalQty})` : ""}
+            </h3>
             <button
               onClick={closeCart}
               className="text-gray-400 hover:text-gray-600 p-1"
               type="button"
+              aria-label="Close cart"
             >
               <FiX className="text-xl" />
             </button>
           </div>
 
-          {/* Content placeholder (no add-to-cart feature) */}
-          <div className="p-6 text-gray-600">
-            <p className="text-sm">You are not order yet</p>
+          <div className="p-4 h-[calc(100%-170px)] overflow-auto">
+            {cartItems.length === 0 ? (
+              <p className="text-sm text-gray-600">Your cart is empty</p>
+            ) : (
+              <div className="space-y-4">
+                {cartItems.map((item) => (
+                  <div key={item.id} className="flex gap-3 border-b pb-3">
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+
+                    <div className="flex-1">
+                      <p className="font-semibold text-sm">{item.name}</p>
+                      <p className="text-xs text-gray-500">{item.category}</p>
+
+                      <div className="flex items-center justify-between mt-1">
+                        <p className="text-sm font-bold text-green-600">
+                          ${item.price}{" "}
+                          <span className="text-xs text-gray-500">USD</span>
+                        </p>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="text-red-500 text-xs hover:underline"
+                          type="button"
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      <div className="flex items-center gap-2 mt-2">
+                        <button
+                          onClick={() => decreaseQty(item.id)}
+                          className="px-2 py-1 border rounded"
+                          type="button"
+                        >
+                          -
+                        </button>
+                        <span className="text-sm">{item.qty}</span>
+                        <button
+                          onClick={() => increaseQty(item.id)}
+                          className="px-2 py-1 border rounded"
+                          type="button"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="p-4 border-t border-gray-200 ">
+            <div className="flex items-center justify-between font-semibold">
+              <span>Total:</span>
+              <span>${Number(totalPrice).toFixed(2)}</span>
+            </div>
+
+            <button
+              className={`mt-3 w-full py-2 rounded font-semibold ${
+                cartItems.length === 0
+                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  : "bg-[#178ED8] text-white hover:bg-blue-500"
+              }`}
+              type="button"
+              disabled={cartItems.length === 0}
+            >
+              Checkout
+            </button>
           </div>
         </aside>
       </div>

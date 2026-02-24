@@ -1,14 +1,21 @@
-const AddToCart = () => {
-  const alertAddToCart = () => {
-    alert("Item added to cart!");
+import { useContext } from "react";
+import { CartContext } from "../../../context/CartContext";
+
+const AddToCart = ({ product }) => {
+  const { addToCart } = useContext(CartContext);
+
+  const handleAdd = () => {
+    addToCart(product);
   };
+
   return (
     <button
-      onClick={alertAddToCart}
-      className="bg-blue-500 text-white px-5 py-1.5 rounded-md hover:bg-blue-600 transition duration-300"
+      onClick={handleAdd}
+      className="bg-blue-500 text-white px-3 py-1 text-sm rounded-md whitespace-nowrap"
     >
       Add to Cart
     </button>
   );
 };
+
 export default AddToCart;

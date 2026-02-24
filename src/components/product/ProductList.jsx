@@ -1,10 +1,18 @@
+import Card from "../ui/card/Card"; // ឲ្យត្រឹម path របស់បង
+
 export default function ProductList({ products }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
       {products.map((p) => (
-        <div key={p.id} className="p-4 border rounded">
-          {p.name}
-        </div>
+        <Card
+          key={p.id}
+          img={p.img}
+          name={p.name}
+          category={p.category}
+          priceR={`$${p.price}`}
+          priceD={p.currency || "USD"}
+          product={p} // ✅ for AddToCart
+        />
       ))}
     </div>
   );
