@@ -10,25 +10,30 @@ import Error404 from "./pages/Error404";
 import CategoryPage from "./pages/Shop/CategoryPage";
 import CartProvider from "./context/CartProvider";
 import Cartpage from "./components/cart/Cartpage";
+import FavoriteProvider from "./context/FavoriteProvider";
+import Review from "./pages/Review";
 
 function App() {
   return (
     <CartProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/about" element={<Aboutpage />} />
-            <Route path="/contact" element={<Contactpage />} />
-            <Route path="/favorite" element={<Favoritepage />} />
-            <Route path="/Create_Account" element={<CreateAcc />} />
-            <Route path="/shop" element={<Shoppage />} />
-            <Route path="/shop/:category" element={<CategoryPage />} />
-            <Route path="/cart" element={<Cartpage />} />
-            <Route path="/*" element={<Error404 />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <FavoriteProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/about" element={<Aboutpage />} />
+              <Route path="/reviews" element={<Review />} />
+              <Route path="/contact" element={<Contactpage />} />
+              <Route path="/favorite" element={<Favoritepage />} />
+              <Route path="/Create_Account" element={<CreateAcc />} />
+              <Route path="/shop" element={<Shoppage />} />
+              <Route path="/shop/:category" element={<CategoryPage />} />
+              <Route path="/cart" element={<Cartpage />} />
+              <Route path="/*" element={<Error404 />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </FavoriteProvider>
     </CartProvider>
   );
 }

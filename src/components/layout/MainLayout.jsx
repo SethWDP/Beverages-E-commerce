@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { FavoriteContext } from "../../context/FavoriteContext";
 import Footer from "../layout/Footer";
 import {
   FiSearch,
@@ -42,7 +43,7 @@ const AnimatedBurgerIcon = ({ isOpen, onClick }) => {
 const MainLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
+  const { favoriteItems } = useContext(FavoriteContext);
   // cart from context
   const {
     cartItems,
@@ -153,9 +154,11 @@ const MainLayout = () => {
               <div className="justify-self-end flex items-center gap-5">
                 <Link to="/favorite" className="relative text-gray-700">
                   <FiHeart className="text-xl" />
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-                    2
-                  </span>
+                  {favoriteItems.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                      {favoriteItems.length}
+                    </span>
+                  )}
                 </Link>
 
                 <button
@@ -360,9 +363,11 @@ const MainLayout = () => {
                     type="button"
                   >
                     <FiHeart className="text-2xl" />
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                      2
-                    </span>
+                    {favoriteItems.length > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                        {favoriteItems.length}
+                      </span>
+                    )}
                   </button>
                 </Link>
 

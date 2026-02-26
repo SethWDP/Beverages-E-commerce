@@ -1,14 +1,23 @@
 import { BiHeart } from "react-icons/bi";
 import AddToCart from "../../ui/Button/AddToCart";
+import { useContext } from "react";
+import { FavoriteContext } from "../../../context/FavoriteContext";
 
 const Card = ({ product }) => {
   const { img, name, category, price, currency } = product;
-
+  const { addToFavorites, isFavorite } = useContext(FavoriteContext);
+  const handleFavoriteClick = () => {
+    addToFavorites(product);
+  };
   return (
-    <article className="w-full max-w-[250px] h-80 rounded-xl shadow-md hover:shadow-lg transition p-4 my-10 bg-white">
+    <article className="group w-full max-w-[250px] h-80 rounded-xl shadow-md hover:shadow-lg transition p-4 my-10 bg-white">
       {/* Image */}
-      <div className="flex justify-center items-center h-[65%]">
-        <img src={img} alt={name} className="h-full object-cover" />
+      <div className="flex justify-center overflow-hidden items-center h-[65%]">
+        <img
+          src={img}
+          alt={name}
+          className="h-full object-cover group-hover:scale-110 transition-transform duration-300"
+        />
       </div>
 
       {/* Content */}
@@ -22,10 +31,14 @@ const Card = ({ product }) => {
           </div>
 
           <button
-            className="text-gray-400 hover:text-red-500 transition mt-1"
+            onClick={handleFavoriteClick}
+            className={`mt-1 transition ${isFavorite(product.id) ? "text-red-500" : "text-gray-400 hover:text-red-500"}`}
             type="button"
           >
-            <BiHeart size={25} />
+            <BiHeart
+              size={25}
+              fill={isFavorite(product.id) ? "red" : "border-gray-500"}
+            />
           </button>
         </div>
 
