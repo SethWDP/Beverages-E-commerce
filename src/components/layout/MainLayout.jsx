@@ -173,10 +173,11 @@ const MainLayout = () => {
                     </span>
                   )}
                 </button>
-
-                <button type="button" className="text-gray-700">
-                  <MdOutlineAccountCircle className="text-2xl" />
-                </button>
+                <Link to="/profile">
+                  <button type="button" className="text-gray-700">
+                    <MdOutlineAccountCircle className="text-2xl" />
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -246,14 +247,16 @@ const MainLayout = () => {
                     </span>
                   )}
                 </button>
-
-                <button
-                  className="flex gap-2 px-4 py-2 text-black transition"
-                  type="button"
-                >
-                  <MdOutlineAccountCircle className="text-2xl text-gray-700" />
-                  Account
-                </button>
+                {/* profile */}
+                <Link to="/login">
+                  <button
+                    className="flex gap-2 px-4 py-2 text-black transition cursor-pointer"
+                    type="button"
+                  >
+                    <MdOutlineAccountCircle className="text-2xl text-gray-700" />
+                    Account
+                  </button>
+                </Link>
               </div>
             </div>
 

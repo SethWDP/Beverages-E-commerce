@@ -12,7 +12,8 @@ import CartProvider from "./context/CartProvider";
 import Cartpage from "./components/cart/Cartpage";
 import FavoriteProvider from "./context/FavoriteProvider";
 import Review from "./pages/Review";
-
+import Profile from "./pages/Account/Profile";
+import LoginPage from "./pages/Account/LoginPage";
 function App() {
   return (
     <CartProvider>
@@ -25,7 +26,9 @@ function App() {
               <Route path="/reviews" element={<Review />} />
               <Route path="/contact" element={<Contactpage />} />
               <Route path="/favorite" element={<Favoritepage />} />
-              <Route path="/Create_Account" element={<CreateAcc />} />
+              <Route path="/create_Account" element={<CreateAcc />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route path="/shop" element={<Shoppage />} />
               <Route path="/shop/:category" element={<CategoryPage />} />
               <Route path="/cart" element={<Cartpage />} />
