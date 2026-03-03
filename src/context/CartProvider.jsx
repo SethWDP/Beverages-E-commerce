@@ -4,19 +4,21 @@ import { CartContext } from "./CartContext";
 const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (product) => {
+  const addToCart = (product, qty = 1) => {
+    // prevent adding 0 or negative
+    if (qty <= 0) return;
+
     setCartItems((prev) => {
       const found = prev.find((item) => item.id === product.id);
 
-      // if already in cart -> qty + 1
       if (found) {
+        // ✅ set qty to selected qty (REPLACE)
         return prev.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
+          item.id === product.id ? { ...item, qty } : item,
         );
       }
 
-      // if not in cart -> add with qty 1
-      return [...prev, { ...product, qty: 1 }];
+      return [...prev, { ...product, qty }];
     });
   };
 

@@ -14,6 +14,7 @@ import FavoriteProvider from "./context/FavoriteProvider";
 import Review from "./pages/Review";
 import Profile from "./pages/Account/Profile";
 import LoginPage from "./pages/Account/LoginPage";
+import ProductDetail from "./pages/Product/ProductDetail";
 function App() {
   return (
     <CartProvider>
@@ -31,6 +32,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/shop" element={<Shoppage />} />
               <Route path="/shop/:category" element={<CategoryPage />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cartpage />} />
               <Route path="/*" element={<Error404 />} />
             </Route>

@@ -2,7 +2,7 @@ import { BiHeart } from "react-icons/bi";
 import AddToCart from "../../ui/Button/AddToCart";
 import { useContext } from "react";
 import { FavoriteContext } from "../../../context/FavoriteContext";
-
+import { Link } from "react-router-dom";
 const Card = ({ product }) => {
   const { img, name, category, price, currency } = product;
   const { addToFavorites, isFavorite } = useContext(FavoriteContext);
@@ -13,11 +13,17 @@ const Card = ({ product }) => {
     <article className="group w-full max-w-[250px] h-80 rounded-xl shadow-md hover:shadow-lg transition p-4 my-10 bg-white">
       {/* Image */}
       <div className="flex justify-center overflow-hidden items-center h-[65%]">
-        <img
-          src={img}
-          alt={name}
-          className="h-full object-cover group-hover:scale-110 transition-transform duration-300"
-        />
+        <Link
+          to={`/product/${product.id}`}
+          state={{ product }}
+          className="h-full"
+        >
+          <img
+            src={img}
+            alt={name}
+            className="h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          />
+        </Link>
       </div>
 
       {/* Content */}
