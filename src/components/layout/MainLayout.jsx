@@ -10,8 +10,10 @@ import {
   FiBell,
   FiX,
 } from "react-icons/fi";
+import products from "../../data/product";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { CartContext } from "../../context/CartContext";
+import { useSearch } from "../../context/SearchContext";
 
 const AnimatedBurgerIcon = ({ isOpen, onClick }) => {
   return (
@@ -40,10 +42,94 @@ const AnimatedBurgerIcon = ({ isOpen, onClick }) => {
   );
 };
 
+// ✅ Dropdown component using onMouseDown + preventDefault to avoid click race
+const SearchDropdown = ({ suggestions, onSelect }) => (
+  <div className="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50 mt-1">
+    {suggestions.map((product) => (
+      <div
+        key={product.id}
+        // ✅ onMouseDown fires BEFORE onBlur/outside-click, so we prevent default
+        // and handle navigation here — this fixes the "click does nothing" bug
+        onMouseDown={(e) => {
+          e.preventDefault();
+          onSelect(product);
+        }}
+        className="flex items-center gap-3 px-4 py-2 hover:bg-blue-50 cursor-pointer"
+      >
+        <img
+          src={product.img}
+          alt={product.name}
+          className="w-8 h-8 object-cover rounded"
+        />
+        <div>
+          <p className="text-sm text-gray-800">{product.name}</p>
+          <p className="text-xs text-gray-400 capitalize">{product.category}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 const MainLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { favoriteItems } = useContext(FavoriteContext);
+  const { searchQuery, setSearchQuery } = useSearch();
+
+  const [suggestions, setSuggestions] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const searchRef = useRef(null);
+  const mobileSearchRef = useRef(null);
+
+  function handleSearch(e) {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    if (value.trim().length > 0) {
+      const filtered = products
+        .filter((p) => p.name.toLowerCase().includes(value.toLowerCase()))
+        .slice(0, 6);
+      setSuggestions(filtered);
+      setShowDropdown(true);
+    } else {
+      setSuggestions([]);
+      setShowDropdown(false);
+    }
+  }
+
+  function handleSelectProduct(product) {
+    setSearchQuery("");
+    setSuggestions([]);
+    setShowDropdown(false);
+    navigate(`/product/${product.id}`);
+  }
+
+  function handleSearchSubmit() {
+    if (suggestions.length > 0) {
+      handleSelectProduct(suggestions[0]);
+    }
+    setShowDropdown(false);
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      handleSearchSubmit();
+    }
+  }
+
+  // close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      const inDesktop = searchRef.current?.contains(e.target);
+      const inMobile = mobileSearchRef.current?.contains(e.target);
+      if (!inDesktop && !inMobile) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   // cart from context
   const {
     cartItems,
@@ -65,7 +151,6 @@ const MainLayout = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((v) => !v);
-    // when opening menu, close cart
     setIsCartOpen(false);
   };
 
@@ -84,7 +169,7 @@ const MainLayout = () => {
     if (e.target === e.currentTarget) closeCart();
   };
 
-  // close menus when route changes (nice UX)
+  // close menus when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsMobileCategoriesOpen(false);
@@ -118,6 +203,7 @@ const MainLayout = () => {
       if (event.key === "Escape") {
         setIsCartOpen(false);
         setIsMobileMenuOpen(false);
+        setShowDropdown(false);
       }
     };
     document.addEventListener("keydown", handleEscape);
@@ -128,7 +214,7 @@ const MainLayout = () => {
     <>
       <header className="bg-white shadow-sm sticky top-0 z-40">
         <div className="container mx-auto px-4">
-          {/* =============== MOBILE HEADER (center logo like your screenshot) =============== */}
+          {/* =============== MOBILE HEADER =============== */}
           <div className="md:hidden py-3">
             {/* Row 1: burger | centered logo | icons */}
             <div className="grid grid-cols-3 items-center">
@@ -182,20 +268,32 @@ const MainLayout = () => {
             </div>
 
             {/* Row 2: Full-width Search */}
-            <div className="mt-3">
+            <div className="mt-3" ref={mobileSearchRef}>
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search..."
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  onKeyDown={handleKeyDown}
                   className="w-full h-10 pl-4 pr-10 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 />
                 <button
                   type="button"
+                  onClick={handleSearchSubmit}
                   className="absolute right-3 top-1/2 -translate-y-1/2"
                   aria-label="Search"
                 >
                   <FiSearch className="text-gray-500" />
                 </button>
+
+                {/* MOBILE DROPDOWN */}
+                {showDropdown && suggestions.length > 0 && (
+                  <SearchDropdown
+                    suggestions={suggestions}
+                    onSelect={handleSelectProduct}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -214,20 +312,31 @@ const MainLayout = () => {
               </div>
 
               {/* Search Bar */}
-              <div className="flex flex-1 max-w-lg mx-8">
+              <div className="flex flex-1 max-w-lg mx-8" ref={searchRef}>
                 <div className="relative w-full">
                   <input
                     type="text"
                     placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    onKeyDown={handleKeyDown}
                     className="w-full py-2 px-4 pr-10 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                   />
                   <button
-                    className="absolute right-2 top-1/2 -translate-y-1/2 px-1 flex items-center"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 px-1"
                     type="button"
-                    aria-label="Search"
+                    onClick={handleSearchSubmit}
                   >
                     <FiSearch className="text-gray-500" />
                   </button>
+
+                  {/* DESKTOP DROPDOWN */}
+                  {showDropdown && suggestions.length > 0 && (
+                    <SearchDropdown
+                      suggestions={suggestions}
+                      onSelect={handleSelectProduct}
+                    />
+                  )}
                 </div>
               </div>
 
@@ -240,14 +349,12 @@ const MainLayout = () => {
                 >
                   <FiShoppingCart className="text-xl" />
                   <span className="text-sm">Cart</span>
-
                   {totalQty > 0 && (
                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {totalQty}
                     </span>
                   )}
                 </button>
-                {/* profile */}
                 <Link to="/login">
                   <button
                     className="flex gap-2 px-4 py-2 text-black transition cursor-pointer"
@@ -387,7 +494,7 @@ const MainLayout = () => {
             </nav>
           </div>
 
-          {/* =============== MOBILE MENU  =============== */}
+          {/* =============== MOBILE MENU =============== */}
           <div
             className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
               isMobileMenuOpen
@@ -561,7 +668,6 @@ const MainLayout = () => {
                       alt={item.name}
                       className="w-16 h-16 object-cover rounded"
                     />
-
                     <div className="flex-1">
                       <p className="font-semibold text-sm">{item.name}</p>
                       <p className="text-xs text-gray-500">{item.category}</p>
@@ -604,7 +710,7 @@ const MainLayout = () => {
             )}
           </div>
 
-          <div className="p-4 border-t border-gray-200 ">
+          <div className="p-4 border-t border-gray-200">
             <div className="flex items-center justify-between font-semibold">
               <span>Total:</span>
               <span>${Number(totalPrice).toFixed(2)}</span>

@@ -29,17 +29,17 @@ import champion from "../assets/img/energy/champion.jpg";
 import ize from "../assets/img/energy/IZE-.png";
 import monster from "../assets/img/energy/monster.jpeg";
 import redbull from "../assets/img/energy/redbull.jpg";
+
 const products = [
-  // water
+  // ===== WATER =====
   {
     id: 1,
     name: "ទឹកបរិសុទ្ធកម្ពុជា 500ml",
     category: "water",
-    price: 0.25, // number only
-    currency: "USD", // optional
+    price: 0.25,
     img: kh,
-    rating: 4.6, // ⭐ fake rating (0–5)
-    ratingCount: 120, // fake number of reviews
+    rating: 4.6,
+    ratingCount: 120,
     isMostSelling: true,
     isTrending: false,
   },
@@ -47,7 +47,7 @@ const products = [
     id: 2,
     name: "ទឹកបរិសុទ្ធកម្ពុជា 24 x 500ml",
     category: "water",
-    price: 0.25,
+    price: 4.2,
     img: khctn,
     rating: 4.6,
     ratingCount: 120,
@@ -143,7 +143,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 10,
+    id: 11,
     name: "Angkor Puro 500ml",
     category: "water",
     price: 0.24,
@@ -154,7 +154,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 11,
+    id: 12,
     name: "Angkor Puro 24 x 500ml",
     category: "water",
     price: 4.0,
@@ -165,7 +165,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 10,
+    id: 13,
     name: "Pocari Sweat 500ml",
     category: "water",
     price: 0.9,
@@ -176,7 +176,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 10,
+    id: 14,
     name: "Pocari Sweat 24 x 500ml",
     category: "water",
     price: 18.0,
@@ -186,9 +186,10 @@ const products = [
     isMostSelling: false,
     isTrending: false,
   },
-  // Energy drink
+
+  // ===== ENERGY DRINK =====
   {
-    id: 11,
+    id: 15,
     name: "Sting Red Can 330ml",
     category: "energydrink",
     price: 0.56,
@@ -199,8 +200,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 12,
-    name: "Sting Yellow Can 330mll",
+    id: 16,
+    name: "Sting Yellow Can 330ml",
     category: "energydrink",
     price: 0.56,
     img: stingy,
@@ -210,7 +211,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 13,
+    id: 17,
     name: "Coca-Cola Classic 330ml",
     category: "energydrink",
     price: 0.51,
@@ -221,8 +222,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 14,
-    name: "Coca Cola Zero 330Ml",
+    id: 18,
+    name: "Coca Cola Zero 330ml",
     category: "energydrink",
     price: 0.51,
     img: coca0,
@@ -232,7 +233,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 15,
+    id: 19,
     name: "Cambodia Cola 330ml",
     category: "energydrink",
     price: 0.44,
@@ -243,7 +244,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 16,
+    id: 20,
     name: "Idol Iconfident Drink 330ml",
     category: "energydrink",
     price: 0.66,
@@ -254,7 +255,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 17,
+    id: 21,
     name: "Boostrong Power Plus Energy Drink Can 250ml",
     category: "energydrink",
     price: 0.9,
@@ -265,7 +266,7 @@ const products = [
     isTrending: false,
   },
   {
-    id: 18,
+    id: 22,
     name: "Vigor Energy Drink Can 250ml",
     category: "energydrink",
     price: 0.7,
@@ -276,8 +277,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 19,
-    name: "Krud Energy Drink 250ml ",
+    id: 23,
+    name: "Krud Energy Drink 250ml",
     category: "energydrink",
     price: 0.8,
     img: krud,
@@ -287,8 +288,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 20,
-    name: "CHAMPION Energy Drink 250ml ",
+    id: 24,
+    name: "CHAMPION Energy Drink 250ml",
     category: "energydrink",
     price: 0.65,
     img: champion,
@@ -298,8 +299,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 21,
-    name: "Bacchus Blue Energy Drink 250ml ",
+    id: 25,
+    name: "Bacchus Blue Energy Drink 250ml",
     category: "energydrink",
     price: 0.78,
     img: bacus,
@@ -309,8 +310,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 22,
-    name: "Express Energy Strawberry 330ml ",
+    id: 26,
+    name: "Express Energy Strawberry 330ml",
     category: "energydrink",
     price: 0.51,
     img: exprez,
@@ -320,8 +321,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 23,
-    name: "Wurk Energy Drink 250ml ",
+    id: 27,
+    name: "Wurkz Energy Drink 250ml",
     category: "energydrink",
     price: 0.73,
     img: wurkz,
@@ -331,8 +332,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 24,
-    name: "Ize",
+    id: 28,
+    name: "Ize Energy Drink",
     category: "energydrink",
     price: 0.73,
     img: ize,
@@ -342,8 +343,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 25,
-    name: "Redbull 250ml ",
+    id: 29,
+    name: "Redbull 250ml",
     category: "energydrink",
     price: 1.1,
     img: redbull,
@@ -353,8 +354,8 @@ const products = [
     isTrending: false,
   },
   {
-    id: 26,
-    name: "Monster zero ultra energy drink ",
+    id: 30,
+    name: "Monster Zero Ultra Energy Drink",
     category: "energydrink",
     price: 0.73,
     img: monster,
@@ -363,10 +364,11 @@ const products = [
     isMostSelling: true,
     isTrending: false,
   },
-  // SOft drink
+
+  // ===== SOFT DRINK =====
   {
-    id: 15,
-    name: "ទឹកបរិសុទ្ធកម្ពុជា 24 x 500ml",
+    id: 31,
+    name: "Express Strawberry Soft Drink 330ml",
     category: "softdrink",
     price: 4.2,
     img: exprez,
@@ -375,9 +377,10 @@ const products = [
     isMostSelling: true,
     isTrending: false,
   },
-  // Beer
+
+  // ===== BEER =====
   {
-    id: 13,
+    id: 32,
     name: "ទឹកបរិសុទ្ធកម្ពុជា 24 x 500ml",
     category: "beer",
     price: 4.2,
@@ -387,9 +390,10 @@ const products = [
     isMostSelling: true,
     isTrending: false,
   },
-  // Juice
+
+  // ===== JUICE =====
   {
-    id: 14,
+    id: 33,
     name: "ទឹកបរិសុទ្ធកម្ពុជា 24 x 500ml",
     category: "juice",
     price: 4.2,
@@ -400,4 +404,5 @@ const products = [
     isTrending: false,
   },
 ];
+
 export default products;

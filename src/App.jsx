@@ -15,31 +15,34 @@ import Review from "./pages/Review";
 import Profile from "./pages/Account/Profile";
 import LoginPage from "./pages/Account/LoginPage";
 import ProductDetail from "./pages/Product/ProductDetail";
+import { SearchProvider } from "./context/SearchContext";
 function App() {
   return (
-    <CartProvider>
-      <FavoriteProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<MainLayout />}>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/about" element={<Aboutpage />} />
-              <Route path="/reviews" element={<Review />} />
-              <Route path="/contact" element={<Contactpage />} />
-              <Route path="/favorite" element={<Favoritepage />} />
-              <Route path="/create_Account" element={<CreateAcc />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/shop" element={<Shoppage />} />
-              <Route path="/shop/:category" element={<CategoryPage />} />
-              <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={<Cartpage />} />
-              <Route path="/*" element={<Error404 />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </FavoriteProvider>
-    </CartProvider>
+    <SearchProvider>
+      <CartProvider>
+        <FavoriteProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<MainLayout />}>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/about" element={<Aboutpage />} />
+                <Route path="/reviews" element={<Review />} />
+                <Route path="/contact" element={<Contactpage />} />
+                <Route path="/favorite" element={<Favoritepage />} />
+                <Route path="/create_Account" element={<CreateAcc />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/shop" element={<Shoppage />} />
+                <Route path="/shop/:category" element={<CategoryPage />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="/cart" element={<Cartpage />} />
+                <Route path="/*" element={<Error404 />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </FavoriteProvider>
+      </CartProvider>
+    </SearchProvider>
   );
 }
 

@@ -5,8 +5,13 @@ import { Link } from "react-router-dom";
 import products from "../../data/product";
 import ProductList from "../../components/product/ProductList";
 import TestCart from "../../context/TestCart";
+import { useSearch } from "../../context/SearchContext";
 
 const Shoppage = () => {
+  const { searchQuery } = useSearch();
+  const filteredProducts = products.filter((product) =>
+    product.name.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()),
+  );
   return (
     <section className="container mx-auto px-4">
       <section className="bg-banner hero">
