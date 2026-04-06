@@ -14,7 +14,7 @@ import products from "../../data/product";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { CartContext } from "../../context/CartContext";
 import { useSearch } from "../../context/SearchContext";
-
+import { LuCupSoda } from "react-icons/lu";
 const AnimatedBurgerIcon = ({ isOpen, onClick }) => {
   return (
     <button
@@ -232,7 +232,7 @@ const MainLayout = () => {
                   className="text-xl font-bold text-[#178ED8] cursor-pointer flex items-center gap-1"
                   onClick={() => navigate("/")}
                 >
-                  DailyDrinks
+                  <LuCupSoda size={25} /> DailyDrinks
                 </h1>
               </div>
 
@@ -304,10 +304,10 @@ const MainLayout = () => {
               {/* Logo */}
               <div className="flex items-center">
                 <h1
-                  className="text-2xl font-bold text-[#178ED8] cursor-pointer"
+                  className="text-2xl font-bold text-[#178ED8] cursor-pointer flex"
                   onClick={() => navigate("/")}
                 >
-                  DailyDrinks
+                  <LuCupSoda size={30} /> DailyDrinks
                 </h1>
               </div>
 
@@ -715,18 +715,19 @@ const MainLayout = () => {
               <span>Total:</span>
               <span>${Number(totalPrice).toFixed(2)}</span>
             </div>
-
-            <button
-              className={`mt-3 w-full py-2 rounded font-semibold ${
-                cartItems.length === 0
-                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                  : "bg-[#178ED8] text-white hover:bg-blue-500"
-              }`}
-              type="button"
-              disabled={cartItems.length === 0}
-            >
-              Checkout
-            </button>
+            <Link to={"/payment"}>
+              <button
+                className={`mt-3 w-full py-2 rounded font-semibold ${
+                  cartItems.length === 0
+                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    : "bg-[#178ED8] text-white hover:bg-blue-500"
+                }`}
+                type="button"
+                disabled={cartItems.length === 0}
+              >
+                Checkout
+              </button>
+            </Link>
           </div>
         </aside>
       </div>

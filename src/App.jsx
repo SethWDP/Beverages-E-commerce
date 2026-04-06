@@ -15,6 +15,7 @@ import Review from "./pages/Review";
 import Profile from "./pages/Account/Profile";
 import LoginPage from "./pages/Account/LoginPage";
 import ProductDetail from "./pages/Product/ProductDetail";
+import Payments from "./pages/Product/Payments";
 import { SearchProvider } from "./context/SearchContext";
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/shop" element={<Shoppage />} />
+                <Route path="/payment" element={<Payments />} />
                 <Route path="/shop/:category" element={<CategoryPage />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cartpage />} />

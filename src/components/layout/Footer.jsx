@@ -5,7 +5,8 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
-
+import { LuCupSoda } from "react-icons/lu";
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className=" text-gray-300 pt-12 pb-8">
@@ -13,15 +14,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Column */}
           <div>
-            <h2 className="text-2xl font-bold text-blue-500 mb-2">
-              Daily Drink
+            <h2 className="text-2xl font-bold text-blue-500 mb-2 flex">
+              <LuCupSoda size={30} /> Daily Drink
             </h2>
             <p className="text-sm mb-4 text-[#6b6b6b]">
               Daily Drink – Refresh your day with the best beverages, anytime,
               anywhere.
             </p>
             <a
-              href="#"
+              href="/shop"
               className="inline-block bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition-colors duration-300"
             >
               Shop Now
@@ -35,36 +36,44 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/shop/water"
                   className="text-[#6b6b6b] hover:text-blue-500 transition-colors duration-300"
                 >
                   Water & Hydration
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/shop/energydrink"
                   className="text-[#6b6b6b] hover:text-blue-500 transition-colors duration-300"
                 >
-                  Vitamins & Supplements
-                </a>
+                  Energy Drink
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/shop/softdrink"
                   className="text-[#6b6b6b] hover:text-blue-500  transition-colors duration-300"
                 >
-                  Snacks & Beverages
-                </a>
+                  Soft & Soda Drink
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/shop/beer"
                   className="text-[#6b6b6b] hover:text-blue-500  transition-colors duration-300"
                 >
-                  Dairy & Alternatives
-                </a>
+                  Beer & Alcohol
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/shop/juice"
+                  className="text-[#6b6b6b] hover:text-blue-500  transition-colors duration-300"
+                >
+                  Juice
+                </Link>
               </li>
             </ul>
           </nav>
@@ -76,36 +85,36 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className="text-[#6b6b6b] hover:text-blue-500  transition-colors duration-300"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/about"
                   className="text-[#6b6b6b] hover:text-blue-500  transition-colors duration-300"
                 >
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/shop"
                   className="text-[#6b6b6b] hover:text-blue-500  transition-colors duration-300"
                 >
                   Shop
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="contact"
                   className="text-[#6b6b6b] hover:text-blue-500  transition-colors duration-300"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

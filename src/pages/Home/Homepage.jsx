@@ -12,6 +12,7 @@ import krud from "../../assets/img/energy/krud.png";
 import cocakh from "../../assets/img/energy/cocakh.jpg";
 import pocarisweat from "../../assets/img/water/pocarisweat.jpg";
 import soymilk from "../../assets/img/juice/YeosSoyMilk.png";
+import yoesbanner from "../../assets/banner/yoesbanner.jpg";
 
 const Homepage = () => {
   return (
@@ -62,8 +63,8 @@ const Homepage = () => {
           {/* Left big */}
           <article className="w-full lg:w-[39%] h-[250px] sm:h-[350px] lg:h-full">
             <img
-              className="w-full h-full object-cover rounded-md"
-              src="https://scontent.fpnh2-2.fna.fbcdn.net/v/t39.30808-6/489697449_1081441190695298_9057656553511109265_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=b895b5&_nc_ohc=-j-eCiG9GUMQ7kNvwFgPEdq&_nc_oc=AdmkO1OEKM34af67odxvg6ZHv0UoNntPcXTySwxkzaFyUyciAYY_epKq3_J9fUGsBII&_nc_zt=23&_nc_ht=scontent.fpnh2-2.fna&_nc_gid=EFuIiO7M_1nGq_cVp1HLQQ&oh=00_AfsbSUM9aKCYXysnnD9_MhEztFlCxKdJZj0AA9M1VGzWWQ&oe=69A30D6F"
+              className="w-full h-full object-fill rounded-md"
+              src={yoesbanner}
               alt="ads-img"
             />
           </article>

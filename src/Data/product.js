@@ -12,7 +12,6 @@ import angkor from "../assets/img/water/angkor500.png";
 import angkorctn from "../assets/img/water/angkorctn.jpg";
 import pocarisweat from "../assets/img/water/pocarisweat.jpg";
 import pocarisweatctn from "../assets/img/water/pocarisweatctn.jpg";
-
 import stingr from "../assets/img/energy/stingred.jpg";
 import stingy from "../assets/img/energy/stingyellow.jpg";
 import cocaclass from "../assets/img/energy/cocaclass.jpg";
@@ -29,9 +28,44 @@ import champion from "../assets/img/energy/champion.jpg";
 import ize from "../assets/img/energy/IZE-.png";
 import monster from "../assets/img/energy/monster.jpeg";
 import redbull from "../assets/img/energy/redbull.jpg";
+import sevenup from "../assets/img/softdrink/7up.png";
+import izelime from "../assets/img/softdrink/IZE Lemon.png";
+import izefruitpunch from "../assets/img/softdrink/IZE  Fruitpunch.png";
+import sprite from "../assets/img/softdrink/sprite.png";
+import fantagrape from "../assets/img/softdrink/fantagrapge.png";
+import fantafruitpunch from "../assets/img/softdrink/fantafruitpunch.png";
+import fantaorange from "../assets/img/softdrink/fantaorange.png";
+import fantafruitpunchx6 from "../assets/img/softdrink/fantafruitpunchx6.png";
+import fantaorangex6 from "../assets/img/softdrink/fantagrapgex6.png";
+import marindaorange from "../assets/img/softdrink/marindaorange.png";
+import marindagreen from "../assets/img/softdrink/marindagreen.png";
+import Fnapple from "../assets/img/juice/Fnapple.png";
+import sunkist from "../assets/img/juice/sunkist.png";
+import sundrin from "../assets/img/juice/sundrin.png";
+import freshyapple from "../assets/img/juice/freshyapple.png";
+import freshysoy from "../assets/img/juice/freshysoy.png";
+import freshylemon from "../assets/img/juice/freshylemon.png";
+import freshymelon from "../assets/img/juice/freshymelom.png";
+import YoesLychee from "../assets/img/juice/YeosLychee.png";
+import YoesSoyMilk from "../assets/img/juice/YeosSoyMilk.png";
+import YoesWhiteGourd from "../assets/img/juice/YeosWhite-Gourd.png";
 
+import abc from "../assets/img/beer/abc.jpg";
+import abcCtn from "../assets/img/beer/abc-ctn.png";
+import cambodiaPremium from "../assets/img/beer/CambodiaPremiumCan.png";
+import cambodiaLite from "../assets/img/beer/Cambodia-Lite-Can.png";
+import cambodiabeer1 from "../assets/img/beer/cambodiabeer1.png";
+import cambodiaBeerBottle from "../assets/img/beer/Cambodia-beer-bottle.png";
+import hanuman from "../assets/img/beer/hanuman.png";
+import hanumanBeerCtn from "../assets/img/beer/hanumarn beer ctn.jpg";
+import hanumanBlack from "../assets/img/beer/hanumanblack.png";
+import hanumanBlackCtn from "../assets/img/beer/hanumarn black ctn.jpg";
+import hanumanLager from "../assets/img/beer/hanuman lager.png";
+import tccHanumanBlack from "../assets/img/beer/TCC_Hanuman-Black-.png";
+import cambodiaPremiumCtn from "../assets/img/beer/CambodiaPremiumCtn.png";
+import cambodiaBeerCtn from "../assets/img/beer/Cambodia-beer-ctn.png";
 const products = [
-  // ===== WATER =====
+  // ===== WATER (IDs 1-14) =====
   {
     id: 1,
     name: "ទឹកបរិសុទ្ធកម្ពុជា 500ml",
@@ -187,7 +221,7 @@ const products = [
     isTrending: false,
   },
 
-  // ===== ENERGY DRINK =====
+  // ===== ENERGY & SOFT DRINK (IDs 15-30) =====
   {
     id: 15,
     name: "Sting Red Can 330ml",
@@ -213,7 +247,7 @@ const products = [
   {
     id: 17,
     name: "Coca-Cola Classic 330ml",
-    category: "energydrink",
+    category: "softdrink",
     price: 0.51,
     img: cocaclass,
     rating: 4.6,
@@ -224,7 +258,7 @@ const products = [
   {
     id: 18,
     name: "Coca Cola Zero 330ml",
-    category: "energydrink",
+    category: "softdrink",
     price: 0.51,
     img: coca0,
     rating: 4.6,
@@ -235,7 +269,7 @@ const products = [
   {
     id: 19,
     name: "Cambodia Cola 330ml",
-    category: "energydrink",
+    category: "softdrink",
     price: 0.44,
     img: cocakh,
     rating: 4.6,
@@ -334,8 +368,8 @@ const products = [
   {
     id: 28,
     name: "Ize Energy Drink",
-    category: "energydrink",
-    price: 0.73,
+    category: "softdrink",
+    price: 0.32,
     img: ize,
     rating: 4.6,
     ratingCount: 120,
@@ -365,39 +399,391 @@ const products = [
     isTrending: false,
   },
 
-  // ===== SOFT DRINK =====
+  // ===== SOFT DRINK CONTINUED (IDs 31-41) =====
   {
     id: 31,
-    name: "Express Strawberry Soft Drink 330ml",
+    name: "7Up Can 330ml",
     category: "softdrink",
-    price: 4.2,
-    img: exprez,
+    price: 0.49,
+    img: sevenup,
     rating: 4.6,
     ratingCount: 120,
     isMostSelling: true,
     isTrending: false,
   },
-
-  // ===== BEER =====
   {
     id: 32,
-    name: "ទឹកបរិសុទ្ធកម្ពុជា 24 x 500ml",
-    category: "beer",
-    price: 4.2,
-    img: kh,
+    name: "IZE Fruitpunch",
+    category: "softdrink",
+    price: 0.32,
+    img: izefruitpunch,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 33,
+    name: "IZE Lemon",
+    category: "softdrink",
+    price: 0.32,
+    img: izelime,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 34,
+    name: "Fanta Fruit Punch Can 330ml",
+    category: "softdrink",
+    price: 0.51,
+    img: fantafruitpunch,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 35,
+    name: "Fanta Grape Can 330ml",
+    category: "softdrink",
+    price: 0.51,
+    img: fantagrape,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 36,
+    name: "Fanta Orange Can 330ml",
+    category: "softdrink",
+    price: 0.51,
+    img: fantaorange,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 37,
+    name: "Fanta Fruit Punch Flavor 6 x 330ml",
+    category: "softdrink",
+    price: 2.41,
+    img: fantafruitpunchx6,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 38,
+    name: "Fanta Orange Flavor 6 x 330ml",
+    category: "softdrink",
+    price: 2.41,
+    img: fantaorangex6,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 39,
+    name: "Sprite Can 330ml",
+    category: "softdrink",
+    price: 0.51,
+    img: sprite,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 40,
+    name: "Mirinda Orange Can 330ml",
+    category: "softdrink",
+    price: 0.49,
+    img: marindaorange,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 41,
+    name: "Mirinda Green Can 330ml",
+    category: "softdrink",
+    price: 0.49,
+    img: marindagreen,
     rating: 4.6,
     ratingCount: 120,
     isMostSelling: true,
     isTrending: false,
   },
 
-  // ===== JUICE =====
+  // ===== BEER (IDs 42-55) =====
   {
-    id: 33,
-    name: "ទឹកបរិសុទ្ធកម្ពុជា 24 x 500ml",
+    id: 42,
+    name: "ABC BEER CAN 330ML",
+    category: "beer",
+    price: 1.5,
+    img: abc,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 43,
+    name: "ABC BEER CAN 330ML X 24",
+    category: "beer",
+    price: 26.5,
+    img: abcCtn,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 44,
+    name: "Cambodia Premium",
+    category: "beer",
+    price: 26.5,
+    img: cambodiaPremium,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 45,
+    name: "Cambodia Lite",
+    category: "beer",
+    price: 26.5,
+    img: cambodiaLite,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 46,
+    name: "Cambodia Beer 1",
+    category: "beer",
+    price: 26.5,
+    img: cambodiabeer1,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 47,
+    name: "Cambodia Beer Bottle",
+    category: "beer",
+    price: 26.5,
+    img: cambodiaBeerBottle,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 48,
+    name: "Hanuman Beer",
+    category: "beer",
+    price: 25.0,
+    img: hanuman,
+    rating: 4.5,
+    ratingCount: 98,
+    isMostSelling: false,
+    isTrending: true,
+  },
+  {
+    id: 49,
+    name: "Hanuman Beer CTN",
+    category: "beer",
+    price: 48.0,
+    img: hanumanBeerCtn,
+    rating: 4.4,
+    ratingCount: 70,
+    isMostSelling: false,
+    isTrending: false,
+  },
+  {
+    id: 50,
+    name: "Hanuman Black",
+    category: "beer",
+    price: 27.0,
+    img: hanumanBlack,
+    rating: 4.7,
+    ratingCount: 140,
+    isMostSelling: true,
+    isTrending: true,
+  },
+  {
+    id: 51,
+    name: "Hanuman Black CTN",
+    category: "beer",
+    price: 50.0,
+    img: hanumanBlackCtn,
+    rating: 4.6,
+    ratingCount: 85,
+    isMostSelling: false,
+    isTrending: false,
+  },
+  {
+    id: 52,
+    name: "Hanuman Lager",
+    category: "beer",
+    price: 26.0,
+    img: hanumanLager,
+    rating: 4.5,
+    ratingCount: 110,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 53,
+    name: "TCC Hanuman Black",
+    category: "beer",
+    price: 28.0,
+    img: tccHanumanBlack,
+    rating: 4.6,
+    ratingCount: 95,
+    isMostSelling: false,
+    isTrending: true,
+  },
+  {
+    id: 54,
+    name: "Cambodia Premium CTN",
+    category: "beer",
+    price: 52.0,
+    img: cambodiaPremiumCtn,
+    rating: 4.7,
+    ratingCount: 130,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 55,
+    name: "Cambodia Beer CTN",
+    category: "beer",
+    price: 49.0,
+    img: cambodiaBeerCtn,
+    rating: 4.5,
+    ratingCount: 100,
+    isMostSelling: false,
+    isTrending: true,
+  },
+
+  // ===== JUICE (IDs 56-65) =====
+  {
+    id: 56,
+    name: "Sunkist Orange Juice Drink CH 1.89L",
+    category: "juice",
+    price: 6.4,
+    img: sunkist,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 57,
+    name: "Sundrin Orange Fruit Drink 2L",
+    category: "juice",
+    price: 4.9,
+    img: sundrin,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 58,
+    name: "F&N FRUIT TREE APPLE & ALOE VERA JUICE 2L",
+    category: "juice",
+    price: 5.9,
+    img: Fnapple,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 59,
+    name: "Freshy Winter Melon",
     category: "juice",
     price: 4.2,
-    img: kh,
+    img: freshymelon,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 60,
+    name: "Freshy Honey Lemon Tea",
+    category: "juice",
+    price: 2.2,
+    img: freshylemon,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 61,
+    name: "Freshy Apple Juice",
+    category: "juice",
+    price: 4.2,
+    img: freshyapple,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 62,
+    name: "Freshy Soybean Drink",
+    category: "juice",
+    price: 4.2,
+    img: freshysoy,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 63,
+    name: "Yoes Soybean Drink",
+    category: "juice",
+    price: 4.2,
+    img: YoesSoyMilk,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 64,
+    name: "Yoes Lychee Drink",
+    category: "juice",
+    price: 4.2,
+    img: YoesLychee,
+    rating: 4.6,
+    ratingCount: 120,
+    isMostSelling: true,
+    isTrending: false,
+  },
+  {
+    id: 65,
+    name: "Yoes White Gourd Drink",
+    category: "juice",
+    price: 4.2,
+    img: YoesWhiteGourd,
     rating: 4.6,
     ratingCount: 120,
     isMostSelling: true,
