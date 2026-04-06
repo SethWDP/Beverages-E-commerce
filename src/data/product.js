@@ -54,7 +54,7 @@ import abc from "../assets/img/beer/abc.jpg";
 import abcCtn from "../assets/img/beer/abc-ctn.png";
 import cambodiaPremium from "../assets/img/beer/CambodiaPremiumCan.png";
 import cambodiaLite from "../assets/img/beer/Cambodia-Lite-Can.png";
-import cambodiabeer1 from "../assets/img/beer/cambodiabeer1.png";
+import cambodiabeer1 from "../assets/img/beer/cambodiaBeer1.png";
 import cambodiaBeerBottle from "../assets/img/beer/Cambodia-beer-bottle.png";
 import hanuman from "../assets/img/beer/hanuman.png";
 import hanumanBeerCtn from "../assets/img/beer/hanumarn beer ctn.jpg";
