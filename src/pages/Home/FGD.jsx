@@ -4,7 +4,7 @@ import g1 from "../../assets/img/juice/YeosLychee.png";
 import g2 from "../../assets/img/juice/YeosSoyMilk.png";
 import g3 from "../../assets/img/juice/YeosWhite-Gourd.png";
 import g4 from "../../assets/img/energy/IZE-.png";
-import g5 from "../../assets/img/energy/Krud.png";
+import g5 from "../../assets/img/energy/krud.png";
 import g6 from "../../assets/img/energy/exprez.png";
 import g7 from "../../assets/img/energy/Wurkz.png";
 import g8 from "../../assets/img/beer/hanuman.png";
