@@ -1,4 +1,4 @@
-import Carousel from "../../components/UI/Carousel/Carousel.jsx";
+import Carousel from "../../components/ui/Carousel/Carousel.jsx";
 import Service from "../../components/Service.jsx";
 import Shop from "../../components/UI/Button/Shop.jsx";
 import { Link } from "react-router-dom";

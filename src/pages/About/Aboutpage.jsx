@@ -4,7 +4,7 @@ import a2 from "../../assets/banner/drink2.webp";
 import a3 from "../../assets/banner/drink3.jpg";
 import { Goal, Medal, Leaf, Users } from "lucide-react";
 import Count from "../../components/Count";
-import Marquees from "../../components/UI/Marquees";
+import Marquees from "../../components/ui/Marquees";
 const Aboutpage = () => {
   return (
     <>
