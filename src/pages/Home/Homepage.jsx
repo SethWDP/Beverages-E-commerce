@@ -1,6 +1,6 @@
 import Carousel from "../../components/ui/Carousel/Carousel.jsx";
 import Service from "../../components/Service.jsx";
-import Shop from "../../components/UI/Button/Shop.jsx";
+import Shop from "../../components/ui/Button/Shop.jsx";
 import { Link } from "react-router-dom";
 import Mostselling from "../Home/Mostselling.jsx";
 import FGD from "./FGD.jsx";
