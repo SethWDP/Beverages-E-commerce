@@ -10,7 +10,8 @@ import {
   FiBell,
   FiX,
 } from "react-icons/fi";
-import products from "../../data/product";
+
+import products from "../../data/product.js";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { CartContext } from "../../context/CartContext";
 import { useSearch } from "../../context/SearchContext";

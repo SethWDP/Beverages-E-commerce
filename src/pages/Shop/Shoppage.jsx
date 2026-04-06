@@ -2,7 +2,7 @@ import React from "react";
 import "./shop.css";
 import b1 from "../../assets/banner/kbbanner.jpeg";
 import { Link } from "react-router-dom";
-import products from "../../data/product";
+import products from "../../data/product.js";
 import ProductList from "../../components/product/ProductList";
 import TestCart from "../../context/TestCart";
 import { useSearch } from "../../context/SearchContext";

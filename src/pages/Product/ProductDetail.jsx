@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import products from "../../data/product";
+import products from "../../data/product.js";
 import { FaMinus, FaPlus, FaStar } from "react-icons/fa";
 import { CartContext } from "../../context/CartContext";
 import useReview from "../../components/hook/useReview";

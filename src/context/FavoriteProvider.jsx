@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import products from "../data/product";
+import products from "../data/product.js";
 import { FavoriteContext } from "./FavoriteContext";
 
 const FavoriteProvider = ({ children }) => {
